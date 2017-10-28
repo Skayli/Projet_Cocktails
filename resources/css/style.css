@@ -131,5 +131,61 @@ pre {
 
 
 /* PARTIE LOGIN */
+.panel-login>.panel-heading {
+	background-color: #fff;
+	border-color: #fff;
+	text-align:center;
+	font-weight:bold;
+	margin-top:20px;
+}
+ 
+ .panel-heading a{
+	color:#888888;
+ }
+ 
+.panel-login>.panel-heading a.active{
+	color: #26408B;
+	font-size: 18px;
+} 
 
-  
+.panel-login>.panel-heading a {
+	text-decoration:none;
+}
+
+.btn-login {
+	background-color: #26408B;
+	outline: none;
+	color: #fff;
+	font-size: 14px;
+	height: auto;
+	font-weight: normal;
+	padding: 14px 0;
+	text-transform: uppercase;
+	border-color: #26408B;
+}
+
+.btn-login:hover,
+.btn-login:focus {
+	color: #fff;
+	background-color: #3152b4;
+	border-color: #3152b4;
+}
+
+.btn-register {
+	background-color: #009933;
+	outline: none;
+	color: #fff;
+	font-size: 14px;
+	height: auto;
+	font-weight: normal;
+	padding: 14px 0;
+	text-transform: uppercase;
+	border-color: #009933;
+}
+
+.btn-register:hover,
+.btn-register:focus {
+	color: #fff;
+	background-color: #00802b;
+	border-color: #00802b;
+}

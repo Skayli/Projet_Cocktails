@@ -58,8 +58,11 @@
 									<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Mot de passe" value="">
 								</div>
 								<div class="form-group">
-									<input type="text" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirmer le mot de passe" value="">
+									<input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirmer le mot de passe" value="">
 								</div>
+								
+								<br>
+								
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-6 col-sm-offset-3">
@@ -68,7 +71,7 @@
 									</div>
 								</div>
 							</form>
-					
+												
 						</div>
 					</div>
 				</div>

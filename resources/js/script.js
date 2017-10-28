@@ -1,4 +1,6 @@
 $(document).ready(function() {
+	
+	
 
 /* PARTIE ACCUEIL*/	
 	//Mise en forme des balise pre & code (sera surement inutile plus tard)
