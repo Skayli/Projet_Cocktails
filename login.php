@@ -11,9 +11,12 @@
 							<a href="#" id="register-form-link">Inscription</a>
 						</div>
 					</div>
+					
+					<hr>
+					
 				</div>
 				
-				<hr>
+				
 				
 				<div class="panel-body">
 					<div class="row">
