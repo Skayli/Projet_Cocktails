@@ -104,7 +104,7 @@
 				<ul class="nav nav-pills" id="test"><!-- La navbar contient une LISTE de tous les "boutons" | LI == BOUTON -->
 				
 				
-					<li role="presentation" class="btn-navbar btn-changePage" value="accueil" ><!-- class="active" => bouton surligné -->
+					<li role="presentation" class="<?php if(isset($_POST['page'])&& $_POST['page'] == 'accueil' || !isset($_POST["page"])) { echo 'active '; } ?> btn-navbar btn-changePage" value="accueil" ><!-- class="active" => bouton surligné -->
 						<a href="#" class="text-nav-bar">Accueil</a><!-- Bouton vers la page d'accueil -->
 					</li>
 					
@@ -116,11 +116,11 @@
 						<?php echo $superCateg ?>
 					</li>
 					
-					<li role="presentation" class="btn-navbar btn-changePage" value="recettes"><!-- Bouton qui affichera la page ou seront présentées toutes les recettes -->
+					<li role="presentation" class="<?php if(isset($_POST['page'])&& $_POST['page'] == 'recettes') { echo 'active '; } ?> btn-navbar btn-changePage" value="recettes"><!-- Bouton qui affichera la page ou seront présentées toutes les recettes -->
 						<a href="#" class="text-nav-bar">Recettes</a>
 					</li>
 					
-					<li role="presentation" class="btn-navbar btn-changePage" value="login"><!-- Bouton qui affichera la page des formulaire de connexion/inscription (à convenir : comment sauvegarder les données d'un utilisateur) -->
+					<li role="presentation" class="<?php if(isset($_POST['page'])&& $_POST['page'] == 'login') { echo 'active '; } ?> btn-navbar btn-changePage" value="login"><!-- Bouton qui affichera la page des formulaire de connexion/inscription (à convenir : comment sauvegarder les données d'un utilisateur) -->
 						<a href="#" class="text-nav-bar">Inscription/Connexion</a>
 					</li>
 					
@@ -161,7 +161,7 @@
 		<div class="container main-content">
 			
 				<?php
-					if(isset($_POST["page"]) && ($_POST["page"] == "accueil" || $_POST["page"] == "login") || $_POST["page"] == "recettes")
+					if(isset($_POST["page"]) && ($_POST["page"] == "accueil" || $_POST["page"] == "login" || $_POST["page"] == "recettes"))
 					{
 						include($_POST["page"].'.php');
 					} else {
