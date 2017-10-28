@@ -156,7 +156,7 @@ include_once 'Includes/Donnees.inc.php';
 		-->
 		<div class="container main-content">
 			
-				<?php include 'accueil.php' ?>
+				<?php include 'login.php' ?>
 			
 		</div>
 		<!-- //CONTENU PRINCIPAL -->
