@@ -16,6 +16,17 @@ $(document).ready(function() {
 		alert("Vous avez choisi : " + $("#search-aliment").val());
 	});
 	
+	//Gestion du bouton de la navbar surligné
+	$(".btn-navbar").click(function(e) {
+		$(".btn-navbar").removeClass('active');
+		$(this).addClass("active");
+		
+	});
+	
+	$(".btn-changePage").click(function(e) {
+		$("#changePage").find('input[name="page"]').val($(this).attr("value"));
+		$("#changePage").submit();
+	});
 	
 /* PARTIE LOGIN */
 	$(function() {
@@ -27,6 +38,7 @@ $(document).ready(function() {
 			$(this).addClass('active');
 			e.preventDefault();
 		});
+		
 		$('#register-form-link').click(function(e) {
 			$("#register-form").delay(100).fadeIn(100);
 			$("#login-form").fadeOut(100);
