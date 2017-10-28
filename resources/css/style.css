@@ -1,0 +1,131 @@
+html, body {
+	font-family:"Lucida Console", Monaco, monospace;
+	height:100%;
+	min-height:100%;
+}
+
+#header {
+	text-align:center;
+}
+
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -6px;
+    margin-left: -1px;
+    -webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px;
+    border-radius: 0 6px 6px 6px;
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu>a:after {
+    display: block;
+    content: " ";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #ccc;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+
+.dropdown-submenu:hover>a:after {
+    border-left-color: #fff;
+}
+
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+    -webkit-border-radius: 6px 0 6px 6px;
+    -moz-border-radius: 6px 0 6px 6px;
+    border-radius: 6px 0 6px 6px;
+}
+
+.li-submenu a {
+	cursor:default;
+}
+
+#li-sousCategorie a {
+	cursor:pointer;
+}
+
+pre {
+    white-space:normal;
+	margin:0;
+	padding-top:0;
+}
+
+
+.center {
+	text-align:center;
+}
+
+.footer {
+	border-top:solid black 5px;
+	height: 61px;
+}
+
+
+
+/* Couleur du fond header et footer */
+.header, .footer {
+	background-color:#26408B;
+}
+
+/* Titre header & footer */
+.title {
+	color:#FDFFFC;
+}
+
+/* Couleur de la navbar */
+#navbar {
+	background-color:#05204A;
+}
+
+/* Couleur titre de la navbar */
+.text-nav-bar {
+	color:#FDFFFC; /* D8E4FF */
+}
+
+.wrap {
+	min-height:100%;
+/*		height: 100%; */
+	/* Negative indent footer by its height */
+	margin: 0 auto -61px;
+	/* Pad bottom by footer height */
+	padding: 0 0;
+	background-image:url('../bg-img.jpg');
+	background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center; 
+}
+
+.wrap > .main-content {
+	background-color:rgba(193,193,193,0.8);
+	padding-bottom:25px;
+}
+
+.push{
+	height:60px;
+}
+
+.input-group {
+	width:100%;
+}
+  
