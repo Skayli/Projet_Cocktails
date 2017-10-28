@@ -110,7 +110,7 @@ pre {
 	margin: 0 auto -61px;
 	/* Pad bottom by footer height */
 	padding: 0 0;
-	background-image:url('../bg-img.jpg');
+	background-image:url('../images/background-image.jpg');
 	background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center; 

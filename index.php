@@ -79,18 +79,20 @@ include_once 'Includes/Donnees.inc.php';
 <html>
 
 <head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	
     <link href="resources/css/bootstrap.css" rel="stylesheet">
 	<link href="resources/css/style.css" rel="stylesheet">
 		
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="resources/js/script.js"></script>
+	
+
 </head>
 
 <body>
 	<div class="wrap">
 	<?php echo $header;?>
-	
-	
 	
 	<div class="container-fluid" id="navbar">
 		<div class="container">
@@ -145,34 +147,6 @@ include_once 'Includes/Donnees.inc.php';
 
 	<?php echo $footer; ?>
 	
-	
  </body>
- 
- 
- <script>
-	//Affiche le contenu des balises pre code a gauche
-	$("pre code").each(function(){
-		var html = $(this).html();
-		var pattern = html.match(/\s*\n[\t\s]*/);
-		$(this).html(html.replace(new RegExp(pattern, "g"),'\n'));
-	});
-	
-	//Permet d'avoir un aliment
-	$("#get-aliment #li-sousCategorie").click(function(){
-		$("#search-aliment").val($(this).attr("value"));
-		alert("Vous avez choisi : " + $("#search-aliment").val());
-	});
-	
-	
-	
-	$('.li-submenu').mousedown(function(e) {
-		
-	});
-	
-	$('.li-submenu').click(function(e) {
-		
-	});
-</script>
- 
 
 </html>
