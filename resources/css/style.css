@@ -65,6 +65,10 @@ html, body {
 	cursor:pointer;
 }
 
+.nav-pills > li {
+	margin-top:6px;
+}
+
 pre {
     white-space:normal;
 	margin:0;

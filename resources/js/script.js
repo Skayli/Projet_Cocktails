@@ -20,12 +20,12 @@ $(document).ready(function() {
 	$(".btn-navbar").click(function(e) {
 		$(".btn-navbar").removeClass('active');
 		$(this).addClass("active");
-		
 	});
 	
 	$(".btn-changePage").click(function(e) {
 		$("#changePage").find('input[name="page"]').val($(this).attr("value"));
 		$("#changePage").submit();
+
 	});
 	
 /* PARTIE LOGIN */

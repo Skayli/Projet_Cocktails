@@ -101,7 +101,6 @@
 		<div class="container-fluid" id="navbar">
 			<div class="container">
 			
-			<form method="post" action="#" id="changePage">
 				<ul class="nav nav-pills" id="test"><!-- La navbar contient une LISTE de tous les "boutons" | LI == BOUTON -->
 				
 				
@@ -143,9 +142,10 @@
 						</form>
 					</div>
 				
-				<input type="hidden" name="page"/>
-				
 				</ul>
+				
+			<form method="post" action="#" id="changePage">
+				<input type="hidden" name="page"/>
 			</form>
 			
 			</div>
