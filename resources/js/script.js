@@ -70,9 +70,10 @@ $(document).ready(function() {
 			//Si tout est bon, on enregistre les données, on affiche le bon déroulement des opérations et on retourne à la page d'accueil
 			if(isUsernameOK(username) && isEmailOk(email) && isPasswordSafeEnough(password) && passwordAreIdentical(password, confirmPassword) && isUsernameOrEmaiNotlAlreadyUsed)
 			{
-				saveDataIntoJSONFile(username, email, password);
+				saveDataIntoJSONFile(username, email, password); //Sauvegarde dans 'user.json'
 				
-				swal({
+				
+				swal({												//Alerte : succes de l'enregistement
 				  type: 'success',
 				  title: 'Inscription complète !',
 				  showConfirmButton: true,
@@ -88,19 +89,42 @@ $(document).ready(function() {
 			//Sinon, on affiche dans la console les soucis (debug) et on affiche une alerte qu'il y a un probleme (à modifier encore)
 			} else {
 				
-				console.clear();
+				//console.clear();
 				console.log("username -> "+isUsernameOK(username));
 				console.log("email -> "+isEmailOk(email));
 				console.log("password strengh -> " + isPasswordSafeEnough(password));
 				console.log("arePasswordIdentical ? -> " + passwordAreIdentical(password, confirmPassword));
 				console.log("isUsernameOrEmaiNotlAlreadyUsed -> " + isUsernameOrEmaiNotlAlreadyUsed);
 				
-				swal(
-				  'Oops...',
-				  'Verifiez vos informations !',
-				  'error'
-				)
-			
+				if(!isUsernameOrEmaiNotlAlreadyUsed) //cas ou l'utilisateur est deja connu
+				{
+					swal({
+						title: '<i>Vous êtes déjà inscrits ?</i>',
+						type: 'info',
+						html:
+							"Le nom d'utilisateur ou l'email est deja utilisé !",
+						showCloseButton: true,
+						showCancelButton: false,
+						focusConfirm: true,
+						confirmButtonText:
+							"Ok"
+					})
+				} else {		//Sinon on affiche ce les informations à corriger
+					swal({
+						title: '<i>Renseignements Incorrects</i>',
+						type: 'error',
+						html:"Nom d'utilisateur incorrect",
+						showCloseButton: true,
+						showCancelButton: false,
+						focusConfirm: true,
+						confirmButtonText: "Compris !"
+					})
+					
+					displayIfNeeded(isUsernameOK(username), document.getElementById("register-username-error"));
+					displayIfNeeded(isEmailOk(email), document.getElementById("register-email-error"));
+					displayIfNeeded(isPasswordSafeEnough(password), document.getElementById("register-password-error"));
+					displayIfNeeded(passwordAreIdentical(password, confirmPassword), document.getElementById("register-confirm-password-error"));
+				}
 			}
 				
 		});
@@ -156,16 +180,18 @@ $(document).ready(function() {
 		function checkDataBaseForUsernameAndEmail(username, email)
 		{	
 			var check = false;
+			
 					$.ajax ({
 						'async':false,
 						'global':false,
-						'url': 'users.json',			
+						'url': 'users.json',
+						'dataType':'json',
 						'success': function(data) {
-							
+							console.log(data);
 							$.each(data, function(user, userObject) {
 								
 								$.each(userObject, function(userObject, userDetails) {
-									
+									console.log(userDetails["username"].toLowerCase() + " --- " + userDetails["email"]);
 									if(username.toLowerCase() == userDetails["username"].toLowerCase() || email.toLowerCase() == userDetails["email"])
 									{
 										console.log("test");
@@ -180,5 +206,14 @@ $(document).ready(function() {
 			return !check;
 		}
 		
+		//Affiche le message d'erreur selon que l'état du booleen
+		function displayIfNeeded(isOk, messageError)
+		{
+			if(isOk) {
+				messageError.style.display = "none";
+			} else {
+				messageError.style.display = "inline-block";
+			}
+		}
 /* PARTIE COCKTAILS */
 });

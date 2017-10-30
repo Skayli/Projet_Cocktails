@@ -53,15 +53,19 @@
 							<form id="register-form" action="#" method="post" role="form" style="display:none">
 								<div class="form-group">
 									<input type="text" name="username" id="register-username" tabindex="1" class="form-control" placeholder="Nom d'utilisateur" value="">
+									<span class="msgError" id="register-username-error">Nom d'utilisateur incorrect</span>
 								</div>
 								<div class="form-group">
 									<input type="text" name="email" id="register-email" tabindex="1" class="form-control" placeholder="Email" value="">
+									<span class="msgError" id="register-email-error">Email incorrect</span>
 								</div>
 								<div class="form-group">
 									<input type="password" name="password" id="register-password" tabindex="2" class="form-control" placeholder="Mot de passe" value="">
+									<span class="msgError" id="register-password-error">Le mot de passe doit contenir 1 minuscule, 1 majuscule, 1 chiffre, 1 caractère spécial et au moins 6 caractères</span>
 								</div>
 								<div class="form-group">
 									<input type="password" name="confirm-password" id="register-confirm-password" tabindex="2" class="form-control" placeholder="Confirmer le mot de passe" value="">
+									<span class="msgError" id="register-confirm-password-error">Les mots de passe ne sont pas identiques</span>
 								</div>
 								
 								<br>
