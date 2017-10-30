@@ -24,10 +24,10 @@
 						
 							<form id="login-form" action="#" method="post" role="form" style="display:block;">
 								<div class="form-group">
-									<input type="text" name="username" tabindex="1" class="form-control" placeholder="Nom d'utilisateur" value="">
+									<input type="text" name="username" id="login-username" tabindex="1" class="form-control" placeholder="Nom d'utilisateur" value="">
 								</div>
 								<div class="form-group">
-									<input type="password" id="password" tabindex="2" class="form-control" placeholder="Mot de passe" value="">
+									<input type="password" id="login-password" tabindex="2" class="form-control" placeholder="Mot de passe" value="">
 								</div>
 								
 								<br>
@@ -52,16 +52,16 @@
 							
 							<form id="register-form" action="#" method="post" role="form" style="display:none">
 								<div class="form-group">
-									<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Nom d'utilisateur" value="">
+									<input type="text" name="username" id="register-username" tabindex="1" class="form-control" placeholder="Nom d'utilisateur" value="">
 								</div>
 								<div class="form-group">
-									<input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="Email" value="">
+									<input type="text" name="email" id="register-email" tabindex="1" class="form-control" placeholder="Email" value="">
 								</div>
 								<div class="form-group">
-									<input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Mot de passe" value="">
+									<input type="password" name="password" id="register-password" tabindex="2" class="form-control" placeholder="Mot de passe" value="">
 								</div>
 								<div class="form-group">
-									<input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control" placeholder="Confirmer le mot de passe" value="">
+									<input type="password" name="confirm-password" id="register-confirm-password" tabindex="2" class="form-control" placeholder="Confirmer le mot de passe" value="">
 								</div>
 								
 								<br>
