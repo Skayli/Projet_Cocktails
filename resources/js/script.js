@@ -20,10 +20,10 @@ $(document).ready(function() {
 		$(this).addClass("active");
 	});
 	
+	//Changement de page : envoie de la page via la valeur du bouton cliqué et soumission du formulaire "changePage" afin de charger le bon 'include'
 	$(".btn-changePage").click(function(e) {
 		$("#changePage").find('input[name="page"]').val($(this).attr("value"));
 		$("#changePage").submit();
-
 	});
 	
 /* PARTIE LOGIN */
@@ -53,7 +53,9 @@ $(document).ready(function() {
 	
 		//Validation du formulaire "INSCRIPTION"
 		$('#register-form').submit(function(e) {
+			var form = this;
 			
+			e.preventDefault();
 			
 			var username = $('#register-username').val();
 			var email = $('#register-email').val();
@@ -62,7 +64,20 @@ $(document).ready(function() {
 			
 			if(isUsernameOK(username) && isEmailOk(email) && isPasswordSafeEnough(password) && passwordAreIdentical(password, confirmPassword))
 			{
-				alert("OK");
+				
+				swal({
+				  type: 'success',
+				  title: 'Inscription complète !',
+				  showConfirmButton: true,
+				  focusConfirm: true,
+				  confirmButtonText : "Retour à la page d'accueil",
+				  allowOutsideClick:false
+				}).then(function() {
+					setTimeout(function () {
+						form.submit();
+					}, 500);
+				})
+
 			} else {
 						
 				e.preventDefault();
@@ -73,7 +88,11 @@ $(document).ready(function() {
 				console.log("password strengh -> " + isPasswordSafeEnough(password));
 				console.log("arePasswordIdentical ? -> " + passwordAreIdentical(password, confirmPassword));
 				
-				alert("Pas OK");
+				swal(
+				  'Oops...',
+				  'Verifiez vos informations !',
+				  'error'
+				)
 			
 			}
 				
