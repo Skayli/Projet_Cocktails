@@ -62,8 +62,11 @@ $(document).ready(function() {
 			var password = $('#register-password').val();
 			var confirmPassword = $('#register-confirm-password').val();
 			
-			if(isUsernameOK(username) && isEmailOk(email) && isPasswordSafeEnough(password) && passwordAreIdentical(password, confirmPassword))
+			var isUsernameOrEmaiNotlAlreadyUsed = checkDataBaseForUsernameAndEmail(username,email);
+			
+			if(isUsernameOK(username) && isEmailOk(email) && isPasswordSafeEnough(password) && passwordAreIdentical(password, confirmPassword) && isUsernameOrEmaiNotlAlreadyUsed)
 			{
+				saveDataIntoJSONFile(username, email, password);
 				
 				swal({
 				  type: 'success',
@@ -87,6 +90,7 @@ $(document).ready(function() {
 				console.log("email -> "+isEmailOk(email));
 				console.log("password strengh -> " + isPasswordSafeEnough(password));
 				console.log("arePasswordIdentical ? -> " + passwordAreIdentical(password, confirmPassword));
+				console.log("isUsernameOrEmaiNotlAlreadyUsed -> " + isUsernameOrEmaiNotlAlreadyUsed);
 				
 				swal(
 				  'Oops...',
@@ -128,5 +132,45 @@ $(document).ready(function() {
 				return false;
 			}
 		}
+
+		function saveDataIntoJSONFile(username,email,password)
+		{
+			$.ajax({
+				type:"GET",
+				url: 'saveJson.php',
+				dataType:'json',
+				data: { username:username, email:email, password:password },
+				success:function() {alert("OK"); },
+				failure:function() {alert("Error!"); }
+			});
+		}
+		
+		function checkDataBaseForUsernameAndEmail(username, email)
+		{	
+			var check = false;
+					$.ajax ({
+						'async':false,
+						'global':false,
+						'url': 'users.json',			
+						'success': function(data) {
+							
+							$.each(data, function(user, userObject) {
+								
+								$.each(userObject, function(userObject, userDetails) {
+									
+									if(username.toLowerCase() == userDetails["username"].toLowerCase() || email.toLowerCase() == userDetails["email"])
+									{
+										console.log("test");
+										check = true;
+									}
+									
+								});					
+								
+							});
+						}
+					});
+			return !check;
+		}
+		
 /* PARTIE COCKTAILS */
 });
