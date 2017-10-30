@@ -55,15 +55,19 @@ $(document).ready(function() {
 		$('#register-form').submit(function(e) {
 			var form = this;
 			
+			//On empeche le formulaire de se valider
 			e.preventDefault();
 			
+			//Recupération des données pour les valider nous meme
 			var username = $('#register-username').val();
 			var email = $('#register-email').val();
 			var password = $('#register-password').val();
 			var confirmPassword = $('#register-confirm-password').val();
 			
+			//Verification que l'utilisateur n'est pas deja inscrit
 			var isUsernameOrEmaiNotlAlreadyUsed = checkDataBaseForUsernameAndEmail(username,email);
 			
+			//Si tout est bon, on enregistre les données, on affiche le bon déroulement des opérations et on retourne à la page d'accueil
 			if(isUsernameOK(username) && isEmailOk(email) && isPasswordSafeEnough(password) && passwordAreIdentical(password, confirmPassword) && isUsernameOrEmaiNotlAlreadyUsed)
 			{
 				saveDataIntoJSONFile(username, email, password);
@@ -80,10 +84,9 @@ $(document).ready(function() {
 						form.submit();
 					}, 500);
 				})
-
+				
+			//Sinon, on affiche dans la console les soucis (debug) et on affiche une alerte qu'il y a un probleme (à modifier encore)
 			} else {
-						
-				e.preventDefault();
 				
 				console.clear();
 				console.log("username -> "+isUsernameOK(username));
@@ -102,12 +105,14 @@ $(document).ready(function() {
 				
 		});
 		
+		//Verifie le format du nom d'utilisateur
 		function isUsernameOK(username) 
 		{
 			var patternUsername = /^[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]*\-?[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]{2,}$/i;
 			return username.match(patternUsername);
 		}
 		
+		//Vérifie le format du mail de l'utilisateur
 		function isEmailOk(email)
 		{
 			var patternMail = /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/;
@@ -123,6 +128,7 @@ $(document).ready(function() {
 			return password.match(patternPasswordStrengh);
 		}
 		
+		//Verifie que les 2 mots de passe sont identiques
 		function passwordAreIdentical(password, confirmPassword)
 		{
 			if(password.length > 5 && confirmPassword.length > 5)
@@ -133,6 +139,7 @@ $(document).ready(function() {
 			}
 		}
 
+		//Sauvegarde les données dans le fichier 'users.json'
 		function saveDataIntoJSONFile(username,email,password)
 		{
 			$.ajax({
@@ -145,6 +152,7 @@ $(document).ready(function() {
 			});
 		}
 		
+		//Vérifie qu'un username/email n'est pas deja present dans la "Base de Données" avant l'enregistrement
 		function checkDataBaseForUsernameAndEmail(username, email)
 		{	
 			var check = false;
