@@ -9,6 +9,6 @@
 	
 	file_put_contents('users.json',json_encode($data));
 	
-	unset($date);
+	unset($data);
 	
 ?>

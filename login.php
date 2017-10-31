@@ -52,7 +52,7 @@
 							
 							<form id="register-form" action="#" method="post" role="form" style="display:none">
 								<div class="form-group">
-									<input type="text" name="username" id="register-username" tabindex="1" class="form-control" placeholder="Nom d'utilisateur" value="">
+									<input type="text" name="register-username" id="register-username" tabindex="1" class="form-control" placeholder="Nom d'utilisateur" value="">
 									<span class="msgError" id="register-username-error">Nom d'utilisateur incorrect</span>
 								</div>
 								<div class="form-group">

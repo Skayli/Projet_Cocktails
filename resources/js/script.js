@@ -1,5 +1,7 @@
 $(document).ready(function() {
 	
+	$.ajaxSetup({ cache: false });
+	
 /* PARTIE ACCUEIL*/	
 	//Mise en forme des balise pre & code (sera surement inutile plus tard)
 	$("pre code").each(function(){
@@ -119,6 +121,11 @@ $(document).ready(function() {
 		//Validation du formulaire "INSCRIPTION"
 		$('#register-form').submit(function(e) {
 			var form = this;
+			
+			$("#register-username").blur();
+			$("#register-email").blur();
+			$("#register-password").blur();
+			$("#register-confirm-password").blur();
 			
 			//On empeche le formulaire de se valider
 			e.preventDefault();
@@ -248,10 +255,11 @@ $(document).ready(function() {
 			var check = false;
 			
 					$.ajax ({
-						'async':false,
 						'global':false,
+						'async':false,
 						'url': 'users.json',
 						'dataType':'json',
+						'cache':'false',
 						'success': function(data) {
 							console.log(data);
 							$.each(data, function(user, userObject) {
@@ -269,6 +277,7 @@ $(document).ready(function() {
 							});
 						}
 					});
+		
 			return !check;
 		}
 		
@@ -292,6 +301,7 @@ $(document).ready(function() {
 						'global':false,
 						'url': 'users.json',
 						'dataType':'json',
+						'cache':'false',
 						'success': function(data) {
 							console.log(data);
 							$.each(data, function(user, userObject) {

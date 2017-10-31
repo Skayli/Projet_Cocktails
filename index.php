@@ -77,6 +77,11 @@
 		setCookie("user[username]", mb_convert_case($_POST["username"], MB_CASE_TITLE), time() + 60*60*24*365);
 		$_COOKIE["user"]["username"] = mb_convert_case($_POST["username"], MB_CASE_TITLE);
 	}
+	
+	if(isset($_POST["login-submit"]))
+	{
+		print_r("test");
+	}
 ?>
 
 <!DOCTYPE html>
