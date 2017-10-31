@@ -95,11 +95,51 @@ $(document).ready(function() {
 			}
 		});
 		
+		//Bouton de deconnexion : affichage d'une alert pour valider 
 		$("#btn-deconnexion").click(function() {
-			$.each($.cookie(), function(key,val) {
-				document.cookie = key + '=; Max-Age=0'
-			});
-			location.href = location.pathname
+			swal({
+				title: 'Vous partez déjà ?',
+				type: 'warning',
+				focusCancel: true,
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: "Oui, on m'attend quelque part",
+				cancelButtonText: 'Non, je reste encore un peu',
+				allowOutsideClick: false,
+			}).then(function () {
+				$.each($.cookie(), function(key,val) {
+					document.cookie = key + '=; Max-Age=0'
+				});
+				location.href = location.pathname
+			}, function (dismiss) {
+			  // dismiss can be 'cancel', 'overlay',
+			  // 'close', and 'timer'
+			  if (dismiss === 'cancel') {
+				
+				setTimeout(function () {
+						location.reload();
+				}, 100);
+			  }
+			})
+			
+	/*		swal({
+			  title: 'Vous partez déjà ?',
+			  type: 'warning',
+			  showCancelButton: true,
+			  focusConfirm: false,
+			  confirmButtonColor: '#3085d6',
+			  cancelButtonColor: '#d33',
+			  confirmButtonText: 'Oui, on a besoin de moi quelque part',
+			  cancelButtonText: 'Finalement je vais rester encore un peu',
+			}).then(function () {
+				$.each($.cookie(), function(key,val) {
+					document.cookie = key + '=; Max-Age=0'
+				});
+				location.href = location.pathname
+			})*/
+			
+			
 		});
 		
 		$('#register-username').focus(function() {
@@ -257,6 +297,12 @@ $(document).ready(function() {
 					$.ajax ({
 						'global':false,
 						'async':false,
+						'cache':false,
+						headers: {
+							'Cache-Control': 'no-cache, no-store, must-revalidate', 
+							'Pragma': 'no-cache', 
+							'Expires': '0'
+						},
 						'url': 'users.json',
 						'dataType':'json',
 						'cache':'false',
@@ -299,6 +345,12 @@ $(document).ready(function() {
 					$.ajax ({
 						'async':false,
 						'global':false,
+						'cache':false,
+						headers: {
+							'Cache-Control': 'no-cache, no-store, must-revalidate', 
+							'Pragma': 'no-cache', 
+							'Expires': '0'
+						},
 						'url': 'users.json',
 						'dataType':'json',
 						'cache':'false',

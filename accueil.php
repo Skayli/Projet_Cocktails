@@ -25,7 +25,7 @@
 				  height: 80px;
 				}
 				</code></pre>
-				
+				<!--
 			
 				<h1>HTML Ipsum Presents</h1>
 
@@ -53,4 +53,5 @@
 				  width: 300px;
 				  height: 80px;
 				}
-				</code></pre> 
+				</code></pre> -->
+				
