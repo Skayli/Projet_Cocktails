@@ -8,7 +8,7 @@ $header = "
 			</div>
 		</header>
 	</div>";
-
+	
 $footer = "
 	<footer class='footer center'>
 		<div class='col-lg-12' id='footer'>

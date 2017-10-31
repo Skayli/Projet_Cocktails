@@ -44,11 +44,76 @@ $(document).ready(function() {
 			e.preventDefault();
 		});
 		
-		$('#login-form').submit(function() {
+		//Formulaire de connexion
+		$('#login-form').submit(function(e) {
+			e.preventDefault();
+				
+			var form = this;
 			var username = $('#login-username').val();
 			var password = $('#login-password').val();
 			
-			return false;
+			if(!checkDataBaseForConnexion(username, password))
+			{
+				
+				swal({
+					title: '<i>Erreur de connexion</i>',
+					type: 'error',
+					html: "Connexion refusée : vérifiez login et mot de passe",
+					showCloseButton: true,
+					showCancelButton: false,
+					focusConfirm: true,
+					confirmButtonText: "Oops ..."
+				})
+			} else {
+				swal({												//Alerte : succes de l'enregistement
+				  type: 'success',
+				  title: 'Bienvenue '+ username.toLowerCase().replace(/(^|\s|\-)([a-zéèêë])/g,function(u,v,w){return v+w.toUpperCase()}),
+				  showConfirmButton: true,
+				  focusConfirm: true,
+				  confirmButtonText : "Retour à la page d'accueil",
+				  allowOutsideClick:false
+				}).then(function() {
+					$.ajax ({
+						'type':  'POST',
+						'async': true,
+						'url':   'index.php',
+						'global':false,
+						'dataType' : 'text',
+						'data': { connecte:username },
+						'success': function() {
+							setTimeout(function () {
+								form.submit();
+							}, 500);
+						}
+					});
+					
+					
+					
+				})
+			}
+		});
+		
+		$("#btn-deconnexion").click(function() {
+			$.each($.cookie(), function(key,val) {
+				document.cookie = key + '=; Max-Age=0'
+			});
+			location.href = location.pathname
+		});
+		
+		$('#register-username').focus(function() {
+			document.getElementById("register-username-error").style.display="none";
+		});
+		
+		$('#register-email').focus(function() {
+			document.getElementById("register-email-error").style.display="none";
+		});
+		
+		$('#register-password').focus(function() {
+			document.getElementById("register-password-error").style.display="none";
+		});
+		
+		$('#register-confirm-password').focus(function() {
+			document.getElementById("register-confirm-password-error").style.display="none";
 		});
 	
 		//Validation du formulaire "INSCRIPTION"
@@ -100,7 +165,7 @@ $(document).ready(function() {
 				{
 					swal({
 						title: '<i>Vous êtes déjà inscrits ?</i>',
-						type: 'info',
+						type: 'question',
 						html:
 							"Le nom d'utilisateur ou l'email est deja utilisé !",
 						showCloseButton: true,
@@ -113,13 +178,14 @@ $(document).ready(function() {
 					swal({
 						title: '<i>Renseignements Incorrects</i>',
 						type: 'error',
-						html:"Nom d'utilisateur incorrect",
+						html:"Veuillez remplir le formulaire correctement",
 						showCloseButton: true,
 						showCancelButton: false,
 						focusConfirm: true,
 						confirmButtonText: "Compris !"
 					})
 					
+					//Affichage des messages d'erreurs de chaque input concerné
 					displayIfNeeded(isUsernameOK(username), document.getElementById("register-username-error"));
 					displayIfNeeded(isEmailOk(email), document.getElementById("register-email-error"));
 					displayIfNeeded(isPasswordSafeEnough(password), document.getElementById("register-password-error"));
@@ -214,6 +280,35 @@ $(document).ready(function() {
 			} else {
 				messageError.style.display = "inline-block";
 			}
+		}
+		
+		//Verifie que la connexion est correcte
+		function checkDataBaseForConnexion(username, password)
+		{
+			var check = false;
+			
+					$.ajax ({
+						'async':false,
+						'global':false,
+						'url': 'users.json',
+						'dataType':'json',
+						'success': function(data) {
+							console.log(data);
+							$.each(data, function(user, userObject) {
+								
+								$.each(userObject, function(userObject, userDetails) {
+									if(username.toLowerCase() == userDetails["username"].toLowerCase() && password == userDetails["password"])
+									{
+										check = true;
+									}
+									
+								});					
+								
+							});
+						}
+					});
+					
+			return check;
 		}
 /* PARTIE COCKTAILS */
 });

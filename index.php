@@ -71,6 +71,12 @@
 	asort($ingredients);
 	
 //Fin de la création du bouton avec tous les éléments
+
+//Gestion de la connexion : enregistrement en cookie
+	if(isset($_POST["username"])) {
+		setCookie("user[username]", mb_convert_case($_POST["username"], MB_CASE_TITLE), time() + 60*60*24*365);
+		$_COOKIE["user"]["username"] = mb_convert_case($_POST["username"], MB_CASE_TITLE);
+	}
 ?>
 
 <!DOCTYPE html>
@@ -82,6 +88,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.2/sweetalert2.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.0/jquery.cookie.js"></script>
 	
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.11.2/sweetalert2.min.css" />
 
@@ -100,6 +107,12 @@
 	<!-- Div d'affichage : Contient toute la page sauf le footer -->
 	<div class="wrap"> 
 		<?php echo $header;?>
+		
+		<?php if(isset($_COOKIE["user"])) { ?>
+			
+			<span id="userInfo"><?php echo $_COOKIE["user"]["username"]; ?></span>
+		<?php } ?>
+		
 		
 		<!-- BARRE DE NAVIGATION -->
 		<div class="container-fluid" id="navbar">
@@ -124,9 +137,15 @@
 						<a href="#" class="text-nav-bar">Recettes</a>
 					</li>
 					
-					<li role="presentation" class="<?php if(isset($_POST['page'])&& $_POST['page'] == 'login') { echo 'active '; } ?> btn-navbar btn-changePage" value="login"><!-- Bouton qui affichera la page des formulaire de connexion/inscription (à convenir : comment sauvegarder les données d'un utilisateur) -->
-						<a href="#" class="text-nav-bar">Inscription/Connexion</a>
-					</li>
+					<?php if(isset($_COOKIE["user"])) { ?>
+						<li role="presentation" class="btn-navbar" id="btn-deconnexion">
+							<a href="#" class="text-nav-bar">Deconnexion</a>
+						</li>
+					<?php } else { ?>					
+						<li role="presentation" class="<?php if(isset($_POST['page'])&& $_POST['page'] == 'login') { echo 'active '; } ?> btn-navbar btn-changePage" value="login"><!-- Bouton qui affichera la page des formulaire de connexion/inscription (à convenir : comment sauvegarder les données d'un utilisateur) -->
+							<a href="#" class="text-nav-bar">Inscription/Connexion</a>
+						</li>
+					<?php } ?>
 					
 					<!-- Zone de saisie à droite, contenant une datalist -->
 					<div class="col-sm-5 col-md-5 pull-right">
