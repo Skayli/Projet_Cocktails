@@ -107,41 +107,28 @@ $(document).ready(function() {
 				confirmButtonText: "Oui, on m'attend quelque part",
 				cancelButtonText: 'Non, je reste encore un peu',
 				allowOutsideClick: false,
-			}).then(function () {
+			}).then(function () {		//Si deconnexion => destruction de tous les cookies et retrour à la page d'accueil
 				$.each($.cookie(), function(key,val) {
 					document.cookie = key + '=; Max-Age=0'
 				});
-				location.href = location.pathname
-			}, function (dismiss) {
+				
+				setTimeout(function() {
+					location.href = location.pathname
+				},100);
+				
+			}, function (dismiss) { //Sinon, on recharche la page
 			  // dismiss can be 'cancel', 'overlay',
 			  // 'close', and 'timer'
 			  if (dismiss === 'cancel') {
-				
 				setTimeout(function () {
 						location.reload();
 				}, 100);
 			  }
-			})
-			
-	/*		swal({
-			  title: 'Vous partez déjà ?',
-			  type: 'warning',
-			  showCancelButton: true,
-			  focusConfirm: false,
-			  confirmButtonColor: '#3085d6',
-			  cancelButtonColor: '#d33',
-			  confirmButtonText: 'Oui, on a besoin de moi quelque part',
-			  cancelButtonText: 'Finalement je vais rester encore un peu',
-			}).then(function () {
-				$.each($.cookie(), function(key,val) {
-					document.cookie = key + '=; Max-Age=0'
-				});
-				location.href = location.pathname
-			})*/
-			
-			
+			  
+			})	
 		});
 		
+		//Ces fonctions permettent d'enlever les message d'erreur présent sur le formulaire 'INSCRIPTION'
 		$('#register-username').focus(function() {
 			document.getElementById("register-username-error").style.display="none";
 		});
@@ -201,7 +188,7 @@ $(document).ready(function() {
 			//Sinon, on affiche dans la console les soucis (debug) et on affiche une alerte qu'il y a un probleme (à modifier encore)
 			} else {
 				
-				//console.clear();
+				//debug
 				console.log("username -> "+isUsernameOK(username));
 				console.log("email -> "+isEmailOk(email));
 				console.log("password strengh -> " + isPasswordSafeEnough(password));
@@ -210,7 +197,7 @@ $(document).ready(function() {
 				
 				if(!isUsernameOrEmaiNotlAlreadyUsed) //cas ou l'utilisateur est deja connu
 				{
-					swal({
+					swal({			
 						title: '<i>Vous êtes déjà inscrits ?</i>',
 						type: 'question',
 						html:
@@ -221,7 +208,7 @@ $(document).ready(function() {
 						confirmButtonText:
 							"Ok"
 					})
-				} else {		//Sinon on affiche ce les informations à corriger
+				} else {		//Sinon on affiche les informations à corriger
 					swal({
 						title: '<i>Renseignements Incorrects</i>',
 						type: 'error',
@@ -337,7 +324,7 @@ $(document).ready(function() {
 			}
 		}
 		
-		//Verifie que la connexion est correcte
+		//Verifie que la connexion est correcte (que username et password correspondent)
 		function checkDataBaseForConnexion(username, password)
 		{
 			var check = false;
