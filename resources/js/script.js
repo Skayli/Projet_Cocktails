@@ -359,5 +359,6 @@ $(document).ready(function() {
 					
 			return check;
 		}
+		
 /* PARTIE COCKTAILS */
 });
