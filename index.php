@@ -131,7 +131,7 @@
 					</li>
 					
 					<li role="presentation" class="dropdown btn-navbar"><!-- Bouton multi-liste avec tous les aliments -->
-						<a href="#" class="dropdown-toggle text-nav-bar" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Aliments
+						<a href="#" class="dropdown-toggle text-nav-bar" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ingrédients
 							<span class="caret"></span>
 						</a> 
 						<input type="hidden" id="search-aliment" name="search-aliment" value="nothing"><!-- Input dans lequel on récupère la valeur de l'aliment "feuille" cliqué (cf "script.js") -->
@@ -139,7 +139,7 @@
 					</li>
 					
 					<li role="presentation" class="<?php if(isset($_POST['page'])&& $_POST['page'] == 'recettes') { echo 'active '; } ?> btn-navbar btn-changePage" value="recettes"><!-- Bouton qui affichera la page ou seront présentées toutes les recettes -->
-						<a href="#" class="text-nav-bar">Recettes</a>
+						<a href="#" class="text-nav-bar">Cocktails</a>
 					</li>
 					
 					<?php if(isset($_COOKIE["user"])) { ?>

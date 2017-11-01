@@ -39,6 +39,8 @@
 										</div>
 									</div>
 								</div>
+							
+								<!-- Gerer envoie de mail si mot de passe perdu ? (necessite de configurer wamp)
 								<div class="form-group">
 									<div class="row">
 										<div class="col-sm-12">
@@ -48,6 +50,7 @@
 										</div>
 									</div>
 								</div>
+								-->
 							</form>
 							
 							<form id="register-form" action="#" method="post" role="form" style="display:none">
