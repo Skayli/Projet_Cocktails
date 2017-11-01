@@ -1,29 +1,14 @@
 ﻿	<?php 
 	
-		$images = glob("Photos/*.jpg");
-		
-		foreach($images as $index => $titre)
-				$titre = strtolower(str_replace("Photos/","",$titre));
-		
-		
+		$images = glob("Photos/*.jpg");		
 		asort($Recettes);
-		
-		/*foreach($Recettes as $index => $details)
-		{
-				
-				if(hasAPhoto(suppr_accents($details["titre"])))
-				{
-					echo 'Image de '.$details["titre"].' : <img src="'.hasAPhoto(suppr_accents($details["titre"])).'" class="img-thumbnail" /><br />';
-				} else {
-					echo 'Image de '.$details["titre"].' : Aucune image disponible';
-				}
-		
-		}*/
+	
 		
 		function hasAPhoto($titreCocktail)
 		{
 			global $images;
 			$titreCocktail = str_replace(" ", "_", $titreCocktail).".jpg";
+			$titreCocktail = str_replace("'", "", $titreCocktail);
 			$hasAPhoto = false;
 		
 			foreach($images as $index => $titreImage)
@@ -37,7 +22,7 @@
 			return $hasAPhoto;
 		}
 				
-		
+		//Enleve les accents présents (afin de pouvoir faire des comparaisons)
 		function suppr_accents($str, $encoding='utf-8')
 		{
 			// transformer les caractères accentués en entités HTML
@@ -56,6 +41,26 @@
 			return $str;
 		}
 		
+		//Retourne un tableau des ingrédients du cocktail en parametre
+		function getAllIngredients($indexCocktail)
+		{
+			global $Recettes;
+			return explode("|",$Recettes[$indexCocktail]["ingredients"]);
+		}
+		
+		//Retourne un tableau des préparation du cocktail en parametre
+		function getPreparation($indexCocktail)
+		{
+			global $Recettes;
+			return multiexplode(array(". ","!"),$Recettes[$indexCocktail]["preparation"]);
+		}
+		
+		//Pour utiliser la fonction explode avec plusieurs délimiteurs
+		function multiexplode ($delimiters,$string) {
+			$ready = str_replace($delimiters, $delimiters[0], $string);
+			$launch = explode($delimiters[0], $ready);
+			return  $launch;
+		}
 	?>
 	
 	<h1>Cocktails</h1>
@@ -67,21 +72,53 @@
 					
 						foreach($Recettes as $index => $details)
 						{
+							//Pour mettre à la ligne la partie entre parenthese dans les titres (et faire plus propre)
 							$arr = explode("(", $details["titre"], 2);
 							$titre = $arr[0];
 							$parenthese = isset($arr[1]) ? '('.$arr[1] : '';
 					
 							
 							echo '<div class="col-sm-12 thumbnail">';
-							
-							echo '<h4 class="thumbnail-title">'.$titre.'<br />'.$parenthese.'</h4>';
+
+								//Affichage du titre
+								echo '<h3 class="thumbnail-title">'.$titre.'<br />'.$parenthese.'</h3>';
+								
+								//Affichage de la photo si le cocktail en a une dans le dossier Photos
 								if(hasAPhoto(suppr_accents($details["titre"])))
 								{
 									echo '<br /> <img src="'.hasAPhoto(suppr_accents($details["titre"])).'" class="img" /><br />';
 								} else {
 									echo '<br /> <img src="resources/images/no_img.jpg" class="img" /><br />';
 								}
+								
+								echo "<hr class='cocktails-hr'>";
+								
+								//Affichage des ingrédients du cocktail
+								echo '<div class="details ingredients"> <h4 class="title-details">Ingrédients</h4>';
+								
+									$ingredients = getAllIngredients($index); //Recupération des ingrédients sous la forme d'un tableau en passant l'index du cocktail pour y accéder directement
+									
+									foreach($ingredients as $listeIngredients)
+									{
+										echo '<span class="listeDetails">'.$listeIngredients."</span><br />";
+									}
+								
+								echo '</div>';
 											
+								echo "<hr class='cocktails-hr'>";
+									
+								//Affichage de la preparation, de la meme façon que les ingredients !
+								echo '<div class="details preparation"> <h4 class="title-details">Préparation</h4>';
+								
+									$preparation = getPreparation($index);
+									
+									foreach($preparation as $listePreparation)
+									{
+										echo '<span class="listeDetails">'.$listePreparation."</span><br />";
+									}
+									
+								echo '</div>';
+									
 							echo '</div>';
 							
 						}

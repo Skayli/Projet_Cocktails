@@ -236,8 +236,8 @@ pre {
 
 /* PARTIE RECETTES */
 .thumbnail {
-	min-height:400px;
-	max-height:400px;
+	display:block;
+	overflow:auto;
 }
 
 .img {
@@ -282,4 +282,18 @@ pre {
 	60%{color: green;}
 	80%{color: blue;}
 	100%{color: orange;}	
+}
+
+.details {
+	text-align:center;
+}
+
+.title-details {
+	text-decoration:underline;
+}
+
+.cocktails-hr {
+	height: 6px;
+	background: url(http://ibrahimjabbari.com/english/images/hr-11.png) repeat-x 0 0;
+    border: 0;
 }
