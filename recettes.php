@@ -52,7 +52,9 @@
 		function getPreparation($indexCocktail)
 		{
 			global $Recettes;
-			return multiexplode(array(". ","!"),$Recettes[$indexCocktail]["preparation"]);
+			$chars = preg_split('/([^.!?\s][^.!?]*(?:[.!?](?![\'\"]?\s|$)[^.!?]*)*[.!?]?[\'\"]?(?=\s|$))/', $Recettes[$indexCocktail]["preparation"], -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE); 
+			return $chars;
+			// return multiexplode(array(". ","!"),$Recettes[$indexCocktail]["preparation"]);
 		}
 		
 		//Pour utiliser la fonction explode avec plusieurs délimiteurs
@@ -114,10 +116,11 @@
 									
 									foreach($preparation as $listePreparation)
 									{
-										echo '<span class="listeDetails">'.$listePreparation."</span><br />";
+										if($listePreparation != " ")
+											echo '<span class="listeDetails">'.$listePreparation."</span><br />";
 									}
 									
-								echo '</div>';
+								echo '<br /></div>';
 									
 							echo '</div>';
 							
