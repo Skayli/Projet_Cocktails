@@ -64,6 +64,8 @@
 			return  $launch;
 		}
 	?>
+	 
+
 	
 	<h1>Cocktails</h1>
 		<p>Retrouvez tous les cocktails et leur recette !</p>
@@ -125,6 +127,19 @@
 									}
 									
 								echo '<br /></div>';
+								
+								if(isset($_COOKIE["user"]))
+									echo '
+									<div class="pretty p-icon p-toggle p-plain p-smooth">
+										<input type="checkbox" />
+										<div class="state p-off">
+											<i class="icon glyphicon glyphicon-heart-empty" ></i>
+										</div>
+										<div class="state p-on p-danger-o">
+											<i class="icon glyphicon glyphicon-heart" title="retirer des favoris"></i>
+										</div>
+									</div>';
+
 									
 							echo '</div>';
 							
