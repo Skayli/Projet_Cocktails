@@ -70,10 +70,6 @@
 	<h1>Cocktails</h1>
 		<p>Retrouvez tous les cocktails et leur recette !</p>
 		
-		<!-- Bouton pour retourner en haut de la page -->
-		<a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button" title="Cliquez pour retourner en haut de la page" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a>
-
-		
 		<div class="row">
 			
 					<?php
@@ -130,8 +126,8 @@
 								
 								if(isset($_COOKIE["user"]))
 									echo '
-									<div class="pretty p-icon p-toggle p-plain p-smooth">
-										<input type="checkbox" />
+									<div class="pretty p-icon p-toggle p-plain p-smooth" >
+										<input type="checkbox" class="pretty-checkbox" id="checkbox-'.$index.'"/>
 										<div class="state p-off">
 											<i class="icon glyphicon glyphicon-heart-empty" ></i>
 										</div>
@@ -146,28 +142,3 @@
 						}
 					?>
 		</div>
-	
-	<script>
-		
-	$(document).ready(function(){
-		$(window).scroll(function () {
-			if ($(this).scrollTop() > 50) {
-				$('#back-to-top').fadeIn();
-			} else {
-				$('#back-to-top').fadeOut();
-			}
-		});
-		// scroll body to 0px on click
-		$('#back-to-top').click(function () {
-			$('#back-to-top').tooltip('hide');
-			$('body,html').animate({
-				scrollTop: 0
-			}, 800);
-			return false;
-		});
-		
-		$('#back-to-top').tooltip('show');
-
-	});
-		
-	</script>

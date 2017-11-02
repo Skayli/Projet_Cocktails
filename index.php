@@ -180,7 +180,7 @@
 			</div>
 		</div>
 		
-		<!-- //BARRE DE NAVIGATION -->
+		<!-- //BARRE DE NAVIGATION --> 
 		
 		<!-- CONTENU PRINCIPAL -->
 		<!--
@@ -188,7 +188,8 @@
 		et d'include la bonne quand nécessaire (selon le bouton de la navbar cliqué, on affiche accueil.php, login.php, etc ... 
 		-->
 		<div class="container main-content">
-			
+			<!-- Bouton pour retourner en haut de la page -->
+		<a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button" title="Cliquez pour retourner en haut de la page" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a> 
 				<?php
 					if(isset($_POST["page"]) && ($_POST["page"] == "accueil" || $_POST["page"] == "login" || $_POST["page"] == "recettes"))
 					{
@@ -207,6 +208,7 @@
 	
 	</div>
 	<!-- //WRAP -->
+	
 	
 	<?php echo $footer; ?>
 	
