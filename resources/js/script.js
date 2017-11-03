@@ -295,18 +295,11 @@ $(document).ready(function() {
 						'cache':'false',
 						'success': function(data) {
 							console.log(data);
-							$.each(data, function(user, userObject) {
-								
-								$.each(userObject, function(userObject, userDetails) {
-									console.log(userDetails["username"].toLowerCase() + " --- " + userDetails["email"]);
-									if(username.toLowerCase() == userDetails["username"].toLowerCase() || email.toLowerCase() == userDetails["email"])
-									{
-										console.log("test");
-										check = true;
-									}
-									
-								});					
-								
+							$.each(data, function(user, details) {
+								if(username.toLowerCase() == details["username"].toLowerCase() || email.toLowerCase() == details["email"].toLowerCase())
+								{
+									check = true;
+								}
 							});
 						}
 					});
@@ -343,16 +336,11 @@ $(document).ready(function() {
 						'cache':'false',
 						'success': function(data) {
 							console.log(data);
-							$.each(data, function(user, userObject) {
-								
-								$.each(userObject, function(userObject, userDetails) {
-									if(username.toLowerCase() == userDetails["username"].toLowerCase() && password == userDetails["password"])
-									{
-										check = true;
-									}
-									
-								});					
-								
+							$.each(data, function(user, details) {
+								if(username.toLowerCase() == details["username"].toLowerCase() && password == details["password"])
+								{
+									check = true;
+								}			
 							});
 						}
 					});
@@ -385,6 +373,14 @@ $(document).ready(function() {
 		if($(this).prop('checked'))
 		{
 			console.log("Ajout du cocktail à l'index " + indexCocktail[1]);
+			$.ajax({
+				type:"GET",
+				url: 'updateCocktails.php',
+				dataType: 'json',
+				data: { ajoutCocktail:indexCocktail[1] },
+				success:function() {alert("OK"); },
+				failure:function() {alert("Error!"); }
+			});
 		} else {
 			console.log("Retrait du cocktail à l'index " +  indexCocktail[1]);
 		}

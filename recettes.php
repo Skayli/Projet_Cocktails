@@ -68,11 +68,18 @@
 
 	
 	<h1>Cocktails</h1>
+	<?php 
+					if(isset($_COOKIE["user"]))
+					{
+						print_r (json_decode($_COOKIE["user"]["cocktailsPreferes"]));
+					}
+				?>
 		<p>Retrouvez tous les cocktails et leur recette !</p>
 		
 		<div class="row">
 			
 					<?php
+					
 					
 						foreach($Recettes as $index => $details)
 						{
