@@ -377,12 +377,24 @@ $(document).ready(function() {
 				type:"GET",
 				url: 'updateCocktails.php',
 				dataType: 'json',
+				async: false,
 				data: { ajoutCocktail:indexCocktail[1] },
 				success:function() {alert("OK"); },
 				failure:function() {alert("Error!"); }
 			});
+			
 		} else {
 			console.log("Retrait du cocktail à l'index " +  indexCocktail[1]);
+			
+			$.ajax({
+				type:"GET",
+				url: 'updateCocktails.php',
+				dataType: 'json',
+				async: false,
+				data: { retireCocktail:indexCocktail[1] },
+				success:function() {alert("OK"); },
+				failure:function() {alert("Error!"); }
+			});
 		}
 	});
 	

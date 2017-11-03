@@ -74,14 +74,28 @@
 
 //Gestion de la connexion : enregistrement en cookie
 	if(isset($_POST["username"])) {
+		
+		//Enregistrement du nom de l'utilisateur
 		setCookie("user[username]", mb_convert_case($_POST["username"], MB_CASE_TITLE), time() + 60*60*24*365);
 		$_COOKIE["user"]["username"] = mb_convert_case($_POST["username"], MB_CASE_TITLE);
+		
+		//Recupération des cocktails préférés et enregistrement dans les cookies
+		$file = file_get_contents('users.json');
+		$data = json_decode($file);
+		unset($file);
+
+		foreach($data as $user)
+		{
+			if($user->username == $_COOKIE["user"]["username"] && isset($user->cocktailsPreferes))
+			{	
+				setCookie("user[cocktailsPreferes]", json_encode($user->cocktailsPreferes), time() + 60*60*24*365);
+				$_COOKIE["user"]["cocktailsPreferes"] = json_encode($user->cocktailsPreferes);
+			}
+		}		
+		
+		unset($data);
 	}
 	
-	if(isset($_POST["login-submit"]))
-	{
-		print_r("test");
-	}
 ?>
 
 <!DOCTYPE html>

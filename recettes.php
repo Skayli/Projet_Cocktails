@@ -69,17 +69,16 @@
 	
 	<h1>Cocktails</h1>
 	<?php 
-					if(isset($_COOKIE["user"]))
-					{
-						print_r (json_decode($_COOKIE["user"]["cocktailsPreferes"]));
-					}
-				?>
+		if(isset($_COOKIE["user"]["cocktailsPreferes"]))
+		{
+			print_r (json_decode($_COOKIE["user"]["cocktailsPreferes"]));
+		}
+	?>
 		<p>Retrouvez tous les cocktails et leur recette !</p>
 		
 		<div class="row">
 			
 					<?php
-					
 					
 						foreach($Recettes as $index => $details)
 						{
@@ -87,65 +86,78 @@
 							$arr = explode("(", $details["titre"], 2);
 							$titre = $arr[0];
 							$parenthese = isset($arr[1]) ? '('.$arr[1] : '';
-					
-							
-							echo '<div class="col-sm-10 thumbnail col-sm-offset-1">';
-
-								//Affichage du titre
-								echo '<h3 class="thumbnail-title">'.$titre.'<br />'.$parenthese.'</h3>';
-								
-								//Affichage de la photo si le cocktail en a une dans le dossier Photos
-								if(hasAPhoto(suppr_accents($details["titre"])))
-								{
-									echo '<br /> <img src="'.hasAPhoto(suppr_accents($details["titre"])).'" class="img" /><br />';
-								} else {
-									echo '<br /> <img src="resources/images/no_img.jpg" class="img" /><br />';
-								}
-								
-								echo "<hr class='cocktails-hr'>";
-								
-								//Affichage des ingrédients du cocktail
-								echo '<div class="details ingredients"> <h4 class="title-details">Ingrédients</h4>';
-								
-									$ingredients = getAllIngredients($index); //Recupération des ingrédients sous la forme d'un tableau en passant l'index du cocktail pour y accéder directement
-									
-									foreach($ingredients as $listeIngredients)
-									{
-										echo '<span class="listeDetails">'.$listeIngredients."</span><br />";
-									}
-								
-								echo '</div>';
-											
-								echo "<hr class='cocktails-hr'>";
-									
-								//Affichage de la preparation, de la meme façon que les ingredients !
-								echo '<div class="details preparation"> <h4 class="title-details">Préparation</h4>';
-								
-									$preparation = getPreparation($index);
-									
-									foreach($preparation as $listePreparation)
-									{
-										if($listePreparation != " ")
-											echo '<span class="listeDetails">'.$listePreparation."</span><br />";
-									}
-									
-								echo '<br /></div>';
-								
-								if(isset($_COOKIE["user"]))
-									echo '
-									<div class="pretty p-icon p-toggle p-plain p-smooth" >
-										<input type="checkbox" class="pretty-checkbox" id="checkbox-'.$index.'"/>
-										<div class="state p-off">
-											<i class="icon glyphicon glyphicon-heart-empty" ></i>
-										</div>
-										<div class="state p-on p-danger-o">
-											<i class="icon glyphicon glyphicon-heart" title="retirer des favoris"></i>
-										</div>
-									</div>';
-
-									
-							echo '</div>';
-							
-						}
 					?>
+							
+						<div class="col-sm-10 thumbnail col-sm-offset-1">
+
+						<!-- Affichage du titre -->
+						<h3 class="thumbnail-title"><?php echo $titre.'<br />'.$parenthese ?></h3>
+								
+					<?php
+							//Affichage de la photo si le cocktail en a une dans le dossier Photos
+							if(hasAPhoto(suppr_accents($details["titre"])))
+							{
+								echo '<br /> <img src="'.hasAPhoto(suppr_accents($details["titre"])).'" class="img" /><br />';
+							} else {
+								echo '<br /> <img src="resources/images/no_img.jpg" class="img" /><br />';
+							}
+					?>		
+						<hr class='cocktails-hr'>
+						
+						<!-- Affichage des ingrédients du cocktail -->
+						<div class="details ingredients"> <h4 class="title-details">Ingrédients</h4>
+					
+					<?php
+							$ingredients = getAllIngredients($index); //Recupération des ingrédients sous la forme d'un tableau en passant l'index du cocktail pour y accéder directement
+							
+							foreach($ingredients as $listeIngredients)
+							{
+								echo '<span class="listeDetails">'.$listeIngredients."</span><br />";
+							}
+							
+					?>
+						
+						</div>
+										
+						<hr class='cocktails-hr'>
+									
+						<!-- Affichage de la preparation, de la meme façon que les ingredients ! -->
+						<div class="details preparation"> <h4 class="title-details">Préparation</h4>
+							
+					<?php
+							$preparation = getPreparation($index);
+							
+							foreach($preparation as $listePreparation)
+							{
+								if($listePreparation != " ")
+									echo '<span class="listeDetails">'.$listePreparation."</span><br />";
+							}
+							
+					?>
+					
+						<br /></div>
+					
+					<?php		
+							if(isset($_COOKIE["user"]))
+							{
+					?>
+								<div class="pretty p-icon p-toggle p-plain p-smooth" >
+									<input type="checkbox" class="pretty-checkbox" id="checkbox-<?php echo $index; ?>" <?php if(isset($_COOKIE["user"]["cocktailsPreferes"]) && is_array(json_decode($_COOKIE["user"]["cocktailsPreferes"])) && (in_array($index, json_decode($_COOKIE["user"]["cocktailsPreferes"])))) { echo "checked"; } ?>/>
+									<div class="state p-off">
+										<i class="icon glyphicon glyphicon-heart-empty" ></i>
+									</div>
+									<div class="state p-on p-danger-o">
+										<i class="icon glyphicon glyphicon-heart" title="retirer des favoris"></i>
+									</div>
+								</div>
+					<?php
+							}
+					?>	
+					
+						</div>
+						
+					<?php 
+						} 
+					?>
+					
 		</div>
