@@ -63,6 +63,16 @@
 			$launch = explode($delimiters[0], $ready);
 			return  $launch;
 		}
+		
+		function isCocktailPrefere($index)
+		{
+			if(isset($_COOKIE["user"]["cocktailsPreferes"]) && is_array(json_decode($_COOKIE["user"]["cocktailsPreferes"])) && (in_array($index, json_decode($_COOKIE["user"]["cocktailsPreferes"]))))
+			{
+				return true;
+			} else {
+				return false;
+			}
+		}
 	?>
 	 
 
@@ -145,7 +155,7 @@
 							{
 					?>
 								<div class="pretty p-icon p-toggle p-plain p-smooth" >
-									<input type="checkbox" class="pretty-checkbox" id="checkbox-<?php echo $index; ?>" <?php if(isset($_COOKIE["user"]["cocktailsPreferes"]) && is_array(json_decode($_COOKIE["user"]["cocktailsPreferes"])) && (in_array($index, json_decode($_COOKIE["user"]["cocktailsPreferes"])))) { echo "checked"; } ?> role="button" title="<?php if(isset($_COOKIE["user"]["cocktailsPreferes"]) && is_array(json_decode($_COOKIE["user"]["cocktailsPreferes"])) && (in_array($index, json_decode($_COOKIE["user"]["cocktailsPreferes"])))) { echo "Retirer des favoris"; } else { echo "Ajouter aux favoris"; } ?>" data-toggle="tooltip" data-placement="top"/>
+									<input type="checkbox" class="pretty-checkbox" id="checkbox-<?php echo $index; ?>" <?php if(isCocktailPrefere($index)) { echo "checked"; } ?> role="button" title="<?php if(isCocktailPrefere($index)) { echo "Retirer des favoris"; } else { echo "Ajouter aux favoris"; } ?>" data-toggle="tooltip" data-placement="top"/>
 									<div class="state p-off">
 										<i class="icon glyphicon glyphicon-heart-empty" ></i>
 									</div>
