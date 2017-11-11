@@ -11,7 +11,7 @@ $(document).ready(function() {
 	});
 
 	//Permet d'avoir un aliment (via l'input HIDDEN de la navbar)
-	$("#get-aliment #li-sousCategorie").click(function(){
+	$(".getCategorie").click(function(){
 		$("#search-aliment").val($(this).attr("value"));
 		alert("Vous avez choisi : " + $("#search-aliment").val());
 	});

@@ -1,9 +1,6 @@
 <?php
 	include_once 'Includes/Header_Footer.inc.php';
 	include_once 'Includes/Donnees.inc.php';
-
-	//Tableau contennant les ingrédients de plus bas niveau
-	$ingredients = array();
 	
 	asort($Hierarchie);
 	
@@ -18,15 +15,14 @@
 	//!! Cette partie peut surement être améliorée (modifier la fonction diplay() afin de n'appeler qu'elle dans la boucle par exemple)
 	foreach($Hierarchie["Aliment"]["sous-categorie"] as $topCateg)
 	{
+		//Le test sert à savoir s'il faut créer un sous*menu parce que l'élément possède des sous-catégories
 		if(array_key_exists("sous-categorie",$Hierarchie[$topCateg]))
 		{
-			$superCateg = $superCateg.'<li class="dropdown-submenu li-submenu"><a>'.$topCateg.'</a>';
+			$superCateg = $superCateg.'<li class="dropdown-submenu li-submenu getCategorie" value="'.$topCateg.'"><a tabindex="-1" href="#">'.$topCateg.'</a>';
 		} 
 		else 
 		{
-			$superCateg = $superCateg.'<li id="li-sousCategorie" value="'.$topCateg.'"><a tabindex="-1" href="#">'.$topCateg.'</a>';
-			array_push($ingredients,$topCateg);
-			
+			$superCateg = $superCateg.'<li class="getCategorie" value="'.$topCateg.'"><a tabindex="-1" href="#">'.$topCateg.'</a>';
 		}
 		
 		display($topCateg);
@@ -39,7 +35,6 @@
 	{
 		global $Hierarchie;
 		global $superCateg;
-		global $ingredients;
 		
 		if(array_key_exists("sous-categorie",$Hierarchie[$categ]))
 		{
@@ -50,29 +45,24 @@
 			{
 				if(array_key_exists("sous-categorie", $Hierarchie[$sousCateg]))
 				{
-					$superCateg = $superCateg.'<li class="dropdown-submenu li-submenu"><a>'.$sousCateg.'</a>';
+					$superCateg = $superCateg.'<li class="dropdown-submenu li-submenu getCategorie"  value="'.$sousCateg.'"><a tabindex="-1" href="#">'.$sousCateg.'</a>';
 				}
 				else 
 				{
-					$superCateg = $superCateg.'<li id="li-sousCategorie" value="'.$sousCateg.'"><a tabindex="-1" href="#">'.$sousCateg.'</a>';
-					
-					if(!in_array($sousCateg, $ingredients))
-					{
-						array_push($ingredients,$sousCateg);
-					}
+					$superCateg = $superCateg.'<li class="getCategorie" value="'.$sousCateg.'"><a tabindex="-1" href="#">'.$sousCateg.'</a>';
 				}
 				display($sousCateg);
 			}	
 			$superCateg = $superCateg.'</ul>';	
 		}
 	}
-	//FIN display()
-	$superCateg = $superCateg.'</ul>';
-	asort($ingredients);
+	//FIN display() 
+	
+	$superCateg = $superCateg.'</ul>'; //Fermeture de la liste des categories
 	
 //Fin de la création du bouton avec tous les éléments
 
-//Gestion de la connexion : enregistrement en cookie
+//Gestion de la connexion : enregistrement en cookie des informations sauvegardées sur le serveur
 	if(isset($_POST["username"])) {
 		
 		//Enregistrement du nom de l'utilisateur
@@ -149,7 +139,7 @@
 						<a href="#" class="dropdown-toggle text-nav-bar" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Ingrédients
 							<span class="caret"></span>
 						</a> 
-						<input type="hidden" id="search-aliment" name="search-aliment" value="nothing"><!-- Input dans lequel on récupère la valeur de l'aliment "feuille" cliqué (cf "script.js") -->
+						<input type="hidden" id="search-aliment" name="search-aliment" value="nothing"><!-- Input dans lequel on récupère la valeur de la categorie cliquée (cf "script.js") -->
 						<?php echo $superCateg ?>
 					</li>
 					
@@ -167,23 +157,23 @@
 						</li>
 					<?php } ?>
 					
-					<!-- Zone de saisie à droite, contenant une datalist -->
+					<!--<!-- Zone de saisie à droite, contenant une datalist 
 					<div class="col-sm-5 col-md-5 pull-right">
 						<form class="navbar-form" role="search">
 							<div class="input-group">
 								<input list="browsers" class="form-control" placeholder="Rechercher">
 								<datalist id="browsers">
-								  <?php foreach($ingredients as $allIngredients => $nom)
+								  <?/*php foreach($ingredients as $allIngredients => $nom)
 								  {
 									  echo '<option value="'.$nom.'" />';
-								  } ?>
+								  } */?>
 								</datalist>
-								<div class="input-group-btn"><!-- Bouton avec la loupe pour lancer la recherche -->
+								<div class="input-group-btn"><!-- Bouton avec la loupe pour lancer la recherche 
 									<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
 								</div>
 							</div>
 						</form>
-					</div>
+					</div> -->
 				
 				</ul>
 				

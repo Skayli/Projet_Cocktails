@@ -58,11 +58,7 @@ html, body {
     border-radius: 6px 0 6px 6px;
 }
 
-.li-submenu a {
-	cursor:default;
-}
-
-#li-sousCategorie a {
+#getCategorie {
 	cursor:pointer;
 }
 
