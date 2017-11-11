@@ -68,17 +68,20 @@
 
 	
 	<h1>Cocktails</h1>
-	<?php 
-		if(isset($_COOKIE["user"]["cocktailsPreferes"]))
-		{
-			print_r (json_decode($_COOKIE["user"]["cocktailsPreferes"]));
-		}
-	?>
+
 		<p>Retrouvez tous les cocktails et leur recette !</p>
 		
-		<div class="row">
-			
+
+			<div class="allCocktails">
 					<?php
+					
+						if(isset($_COOKIE["user"]))
+						{
+					?>
+						<input class="btn btn-primary" id="cocktailsPreferes" type="button" value="Mes cocktails préférés"/>	
+					<?php 
+						}
+		
 					
 						foreach($Recettes as $index => $details)
 						{
@@ -142,12 +145,12 @@
 							{
 					?>
 								<div class="pretty p-icon p-toggle p-plain p-smooth" >
-									<input type="checkbox" class="pretty-checkbox" id="checkbox-<?php echo $index; ?>" <?php if(isset($_COOKIE["user"]["cocktailsPreferes"]) && is_array(json_decode($_COOKIE["user"]["cocktailsPreferes"])) && (in_array($index, json_decode($_COOKIE["user"]["cocktailsPreferes"])))) { echo "checked"; } ?>/>
+									<input type="checkbox" class="pretty-checkbox" id="checkbox-<?php echo $index; ?>" <?php if(isset($_COOKIE["user"]["cocktailsPreferes"]) && is_array(json_decode($_COOKIE["user"]["cocktailsPreferes"])) && (in_array($index, json_decode($_COOKIE["user"]["cocktailsPreferes"])))) { echo "checked"; } ?> role="button" title="<?php if(isset($_COOKIE["user"]["cocktailsPreferes"]) && is_array(json_decode($_COOKIE["user"]["cocktailsPreferes"])) && (in_array($index, json_decode($_COOKIE["user"]["cocktailsPreferes"])))) { echo "Retirer des favoris"; } else { echo "Ajouter aux favoris"; } ?>" data-toggle="tooltip" data-placement="top"/>
 									<div class="state p-off">
 										<i class="icon glyphicon glyphicon-heart-empty" ></i>
 									</div>
 									<div class="state p-on p-danger-o">
-										<i class="icon glyphicon glyphicon-heart" title="retirer des favoris"></i>
+										<i class="icon glyphicon glyphicon-heart"></i>
 									</div>
 								</div>
 					<?php
@@ -159,5 +162,19 @@
 					<?php 
 						} 
 					?>
+			</div>
+			
+			<div class="cocktailsPreferes">
+				<?php 
+					if(isset($_COOKIE["user"]))
+					{
+				?>
+					<div class="col-sm-10 col-sm-offset-1">
+						<input class="btn btn-primary" id="allCocktails" type="button" value="Tous les cocktails">
+					</div>
 					
+				<?php	
+					}
+				?>
+			
 		</div>

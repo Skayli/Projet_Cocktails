@@ -309,4 +309,15 @@ pre {
 .p-plain {
 	color:pink;
 }
+
+#cocktailsPreferes {
+	margin-bottom:20px;
+}
 	
+.cocktailsPreferes {
+	visibility:hidden;
+}
+
+.tooltip {
+    position: fixed;
+}

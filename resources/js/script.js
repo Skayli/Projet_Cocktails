@@ -365,14 +365,21 @@ $(document).ready(function() {
 		return false;
 	});
 	
-	$('#back-to-top').tooltip('show');
+	$('#back-to-top').tooltip({shown:"ready"});
+	$('.pretty-checkbox').tooltip({shown:"ready"});
 	
+
 	$('.pretty-checkbox').click(function() {
 		var indexCocktail = $(this).prop('id').split('-');
+		
+		$(this).tooltip('hide');
+		$(this).blur();
 		
 		if($(this).prop('checked'))
 		{
 			console.log("Ajout du cocktail à l'index " + indexCocktail[1]);
+			$(this).attr("title","Retirer des favoris").tooltip("fixTitle");
+			
 			$.ajax({
 				type:"GET",
 				url: 'updateCocktails.php',
@@ -385,6 +392,7 @@ $(document).ready(function() {
 			
 		} else {
 			console.log("Retrait du cocktail à l'index " +  indexCocktail[1]);
+			$(this).attr("title", "Ajouter aux favoris").tooltip("fixTitle");
 			
 			$.ajax({
 				type:"GET",
@@ -396,6 +404,12 @@ $(document).ready(function() {
 				failure:function() {alert("Error!"); }
 			});
 		}
+		
+		
+	});
+	
+	$("#cocktailsPreferes").click(function() {
+		console.log("click");
 	});
 	
 });
