@@ -29,6 +29,16 @@ $(document).ready(function() {
 	});
 	
 /* PARTIE LOGIN */
+		//Initialisation du format de l'input 'birth-date'
+		$(function () {
+            $('#register-birth-date').datetimepicker({
+				format: 'DD/MM/YYYY',
+				maxDate: $.now()
+			});
+			
+			$('#register-birth-date').val('');
+			
+        });
 
 		$('#login-form-link').click(function(e) {
 			$("#login-form").delay(100).fadeIn(100);

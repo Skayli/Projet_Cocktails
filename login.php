@@ -71,6 +71,26 @@
 									<span class="msgError" id="register-confirm-password-error">Les mots de passe ne sont pas identiques</span>
 								</div>
 								
+								<div class="form-group">
+									<input type="text" class="form-control" name="birth-date" id="register-birth-date" tabindex="2" class="form-control" placeholder="Date de naissance" value="">
+									<span class="msgError" id="register-birth-date-error">Date incorrecte</span>
+								</div>
+								<div class="form-group">
+									<input type="text" name="address" id="register-address" tabindex="2" class="form-control" placeholder="Numéro et rue" value="">
+									<span class="msgError" id="register-address-error">Format de l'adresse incorrect</span>
+								</div>
+								<div class="form-group">
+									<input type="text" name="cp" id="register-cp" tabindex="2" class="form-control" placeholder="Code postal" value="">
+									<span class="msgError" id="register-cp-error">Code postal incorrect</span>
+								</div>
+								<div class="form-group">
+									<input type="text" name="town" id="register-town" tabindex="2" class="form-control" placeholder="Ville" value="">
+									<span class="msgError" id="register-town-error">Ville incorrecte</span>
+								</div>
+								<div class="form-group">
+									<input type="text" name="telephone" id="register-telephone" tabindex="2" class="form-control" placeholder="Numéro de téléphone" value="">
+									<span class="msgError" id="register-telephone-error">Numéro de téléphone incorrect</span>
+								</div>
 								<br>
 								
 								<div class="form-group">
