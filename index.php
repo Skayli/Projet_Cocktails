@@ -100,7 +100,7 @@
 				$_COOKIE["user"]["adresse"] = $user->adresse;
 				
 				setCookie("user[codePostal]", $user->codePostal, time() + 60*60*24*365);
-				$_COOKIE["user"]["codePostal"] = $user->codePostal;
+				$_COOKIE["user"]["odePostal"] = $user->codePostal;
 				
 				setCookie("user[ville]", $user->ville, time() + 60*60*24*365);
 				$_COOKIE["user"]["ville"] = $user->ville;
@@ -158,7 +158,8 @@
 		
 		<?php if(isset($_COOKIE["user"])) { ?>
 			
-			<span id="userInfo"><?php echo $_COOKIE["user"]["username"]; ?></span>
+			<span class="btn-changePage <?php if(isset($_POST['page'])&& $_POST['page'] == 'userData') { echo 'active '; } ?>" id="userInfo" value="userData"><?php echo $_COOKIE["user"]["username"]; ?></span>
+			
 		<?php } ?>
 		
 		
@@ -233,7 +234,7 @@
 			<!-- Bouton pour retourner en haut de la page -->
 		<a id="back-to-top" href="#" class="btn btn-primary btn-lg back-to-top" role="button" title="Cliquez pour retourner en haut de la page" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a> 
 				<?php
-					if(isset($_POST["page"]) && ($_POST["page"] == "accueil" || $_POST["page"] == "login" || $_POST["page"] == "recettes"))
+					if(isset($_POST["page"]) && ($_POST["page"] == "accueil" || $_POST["page"] == "login" || $_POST["page"] == "recettes") || $_POST["page"] == "userData")
 					{
 						include($_POST["page"].'.php');
 					} else {
