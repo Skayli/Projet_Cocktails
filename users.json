@@ -1,1 +1,1 @@
-[{"username":"Test","email":"mail@test.fr","password":"123azerT!","cocktailsPreferes":["1","0"]},{"username":"Testtest","email":"mailtest@de.fr","password":"123azerT!","cocktailsPreferes":["0","3"]}]
+{"0":{"username":"Test","email":"mail@test.fr","password":"123azerT!","dateNaissance":"27\/11\/1994","adresse":"1 all\u00e9e g\u00e9n\u00e9ral Delestraint","codePostal":"57950","ville":"Montigny-l\u00e8s-Metz","telephone":"07 70 57 21 10","cocktailsPreferes":["1","3","2"]}}

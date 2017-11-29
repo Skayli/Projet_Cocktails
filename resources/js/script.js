@@ -1,6 +1,8 @@
 $(document).ready(function() {
 	
 	$.ajaxSetup({ cache: false });
+	$('#register-cp').mask("99999");
+	$('#register-telephone').mask("99 99 99 99 99");
 	
 /* PARTIE ACCUEIL*/	
 	//Mise en forme des balise pre & code (sera surement inutile plus tard)
@@ -11,7 +13,8 @@ $(document).ready(function() {
 	});
 
 	//Permet d'avoir un aliment (via l'input HIDDEN de la navbar)
-	$(".getCategorie").click(function(){
+	$(".getCategorie").click(function(event){
+		event.stopPropagation();
 		$("#search-aliment").val($(this).attr("value"));
 		alert("Vous avez choisi : " + $("#search-aliment").val());
 	});
@@ -33,7 +36,10 @@ $(document).ready(function() {
 		$(function () {
             $('#register-birth-date').datetimepicker({
 				format: 'DD/MM/YYYY',
-				maxDate: $.now()
+				viewMode: 'years',
+				showClear: true,
+				maxDate: $.now(),
+				minDate: new Date(1900,1,1)
 			});
 			
 			$('#register-birth-date').val('');
@@ -138,21 +144,9 @@ $(document).ready(function() {
 			})	
 		});
 		
-		//Ces fonctions permettent d'enlever les message d'erreur présent sur le formulaire 'INSCRIPTION'
-		$('#register-username').focus(function() {
-			document.getElementById("register-username-error").style.display="none";
-		});
-		
-		$('#register-email').focus(function() {
-			document.getElementById("register-email-error").style.display="none";
-		});
-		
-		$('#register-password').focus(function() {
-			document.getElementById("register-password-error").style.display="none";
-		});
-		
-		$('#register-confirm-password').focus(function() {
-			document.getElementById("register-confirm-password-error").style.display="none";
+		//Cette fonction permet d'enlever les message d'erreur présent sur le formulaire 'INSCRIPTION'
+		$('.form-control').focus(function() {
+			$(this).next("span").css('display', 'none');
 		});
 	
 		//Validation du formulaire "INSCRIPTION"
@@ -176,10 +170,16 @@ $(document).ready(function() {
 			//Verification que l'utilisateur n'est pas deja inscrit
 			var isUsernameOrEmaiNotlAlreadyUsed = checkDataBaseForUsernameAndEmail(username,email);
 			
+			var dateNaissance = $('#register-birth-date').val();
+			var adresse = $('#register-address').val();
+			var codePostal = $('#register-cp').val();
+			var ville = $('#register-town').val();
+			var telephone = $('#register-telephone').val();
+			
 			//Si tout est bon, on enregistre les données, on affiche le bon déroulement des opérations et on retourne à la page d'accueil
-			if(isUsernameOK(username) && isEmailOk(email) && isPasswordSafeEnough(password) && passwordAreIdentical(password, confirmPassword) && isUsernameOrEmaiNotlAlreadyUsed)
+			if(isUsernameOK(username) && isEmailOk(email) && isPasswordSafeEnough(password) && passwordAreIdentical(password, confirmPassword) && isUsernameOrEmaiNotlAlreadyUsed && isDateNaissanceOk(dateNaissance) && isAdresseOk(adresse) && isCPOk(codePostal) && isVilleOk(ville) && isTelephoneOk(telephone))
 			{
-				saveDataIntoJSONFile(username, email, password); //Sauvegarde dans 'user.json'
+				saveDataIntoJSONFile(username, email, password, dateNaissance, adresse, codePostal, ville, telephone); //Sauvegarde dans 'user.json'
 				
 				
 				swal({												//Alerte : succes de l'enregistement
@@ -204,6 +204,11 @@ $(document).ready(function() {
 				console.log("password strengh -> " + isPasswordSafeEnough(password));
 				console.log("arePasswordIdentical ? -> " + passwordAreIdentical(password, confirmPassword));
 				console.log("isUsernameOrEmaiNotlAlreadyUsed -> " + isUsernameOrEmaiNotlAlreadyUsed);
+				console.log("dateNaissance -> " + isDateNaissanceOk(dateNaissance));
+				console.log("adresse -> " + isDateNaissanceOk(dateNaissance));
+				console.log("codePostal -> " + isCPOk(codePostal));
+				console.log("ville -> " + isVilleOk(ville));
+				console.log("telephone -> " + isTelephoneOk(telephone));
 				
 				if(!isUsernameOrEmaiNotlAlreadyUsed) //cas ou l'utilisateur est deja connu
 				{
@@ -230,10 +235,15 @@ $(document).ready(function() {
 					})
 					
 					//Affichage des messages d'erreurs de chaque input concerné
-					displayIfNeeded(isUsernameOK(username), document.getElementById("register-username-error"));
-					displayIfNeeded(isEmailOk(email), document.getElementById("register-email-error"));
-					displayIfNeeded(isPasswordSafeEnough(password), document.getElementById("register-password-error"));
-					displayIfNeeded(passwordAreIdentical(password, confirmPassword), document.getElementById("register-confirm-password-error"));
+					displayIfNeeded(isUsernameOK(username), $("#register-username-error"));
+					displayIfNeeded(isEmailOk(email), $("#register-email-error"));
+					displayIfNeeded(isPasswordSafeEnough(password), $("#register-password-error"));
+					displayIfNeeded(passwordAreIdentical(password, confirmPassword), $("#register-confirm-password-error"));
+					displayIfNeeded(isDateNaissanceOk(dateNaissance), $("#register-birth-date-error"));
+					displayIfNeeded(isAdresseOk(adresse), $("#register-address-error"));
+					displayIfNeeded(isCPOk(codePostal), $("#register-cp-error"));
+					displayIfNeeded(isVilleOk(ville), $("#register-town-error"));
+					displayIfNeeded(isTelephoneOk(telephone), $("#register-telephone-error"));
 				}
 			}
 				
@@ -272,15 +282,53 @@ $(document).ready(function() {
 				return false;
 			}
 		}
+		
+		//Verifie que la date de naissance est OK
+		function isDateNaissanceOk(dateNaissance) 
+		{
+			var patternDate = /(^(((0[1-9]|1[0-9]|2[0-8])[\/](0[1-9]|1[012]))|((29|30|31)[\/](0[13578]|1[02]))|((29|30)[\/](0[4,6,9]|11)))[\/](19|[2-9][0-9])\d\d$)|(^29[\/]02[\/](19|[2-9][0-9])(00|04|08|12|16|20|24|28|32|36|40|44|48|52|56|60|64|68|72|76|80|84|88|92|96)$)/;
+			
+			return dateNaissance.match(patternDate);
+		}
+		
+		//Verifie que l'adresse (numero et rue) est OK
+		function isAdresseOk(adresse)
+		{
+			var patternAdresse = /^[0-9]{1,4}[?:(?:[\,\. ]{1,2}(rue|impasse|allee|allée|boulevard|av|av.|bvd|bvd.){1}[a-zA-Zàâäéèêëïîôöùûüç\s]{2,}$/;
+			
+			return adresse.match(patternAdresse);
+		}
+		
+		//Verifie que le code postal est Ok
+		function isCPOk(codePostal)
+		{
+			return codePostal.length == 5;
+		}
+		
+		//Verifie que le nom de la ville est Ok
+		function isVilleOk(ville)
+		{
+			var patternVille = /^[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]{2,}([\s\-]?[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ])*$/i;
+			
+			return ville.match(patternVille);
+		}
+		
+		//Verifie que le numéro de téléphon est Ok
+		function isTelephoneOk(telephone)
+		{
+			var patternTelephone = /^(0|\+33)[1-9]([-. ]?[0-9]{2}){4}$/;
+			
+			return telephone.match(patternTelephone);
+		}
 
 		//Sauvegarde les données dans le fichier 'users.json'
-		function saveDataIntoJSONFile(username,email,password)
+		function saveDataIntoJSONFile(username, email, password, dateNaissance, adresse, codePostal, ville, telephone)
 		{
 			$.ajax({
 				type:"GET",
 				url: 'saveJson.php',
 				dataType:'json',
-				data: { username:username, email:email, password:password },
+				data: { username:username, email:email, password:password, dateNaissance:dateNaissance, adresse:adresse, codePostal:codePostal, ville:ville, telephone:telephone },
 				success:function() {alert("OK"); },
 				failure:function() {alert("Error!"); }
 			});
@@ -315,15 +363,16 @@ $(document).ready(function() {
 					});
 		
 			return !check;
-		}
+		}		
+			
 		
 		//Affiche le message d'erreur selon que l'état du booleen
 		function displayIfNeeded(isOk, messageError)
 		{
 			if(isOk) {
-				messageError.style.display = "none";
+				messageError.css("display", "none");
 			} else {
-				messageError.style.display = "inline-block";
+				messageError.css("display","inline-block");
 			}
 		}
 		
