@@ -52,7 +52,9 @@
 		function getPreparation($indexCocktail)
 		{
 			global $Recettes;
-			$chars = preg_split('/([^.!?\s][^.!?]*(?:[.!?](?![\'\"]?\s|$)[^.!?]*)*[.!?]?[\'\"]?(?=\s|$))/', $Recettes[$indexCocktail]["preparation"], -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE); 
+			// /([^\.!\?]+[\.!\?]+)|([^\.!\?]+$)/
+			/*  /([^.!?\s][^.!?]*(?:[.!?](?![\'\"]?\s|$)[^.!?]*)*[.!?]?[\'\"]?(?=\s|$))/ */
+			$chars = preg_split('/([^\.!\?]+[\.!\?]+)|([^\.!\?]+$)/', $Recettes[$indexCocktail]["preparation"], -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE); 
 			return $chars;
 			// return multiexplode(array(". ","!"),$Recettes[$indexCocktail]["preparation"]);
 		}

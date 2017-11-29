@@ -216,6 +216,7 @@ pre {
 }
 
 .msgError {
+	margin-top:7px;
 	font-size:12px;
 	font-weight:bold;
 	color:red;
@@ -322,29 +323,27 @@ pre {
     position: fixed;
 }
 
-/*[placeholder]:focus::-webkit-input-placeholder {
-  transition: all 0.5s 0.5s ease; 
-  text-align:right;
-  opacity: 0;
-}*/
+.form-group {
+	margin-bottom:30px;
+}
 
-/*.form-label {
-	position:absolute;
-	margin-top:-30px;
-	margin-left:13px;
-	transition: .5s;
-}*/
+.form-group label {
+	margin-left:5px;
+}
 
-/*
-.form-group input:focus ~ label  {
-		transform: translate(350px,0);
-    -webkit-transform: translate(350px,0); /** Chrome & Safari **/
- /*   -o-transform: translate(350px,0); /** Opera **/
- /*   -moz-transform: translate(350px,0); /** Firefox **/
+.switch-gender {
+	font-size:16px;
+}
 
-/*	
-    transition: all 1s ease-in-out;
-    -webkit-transition: all 1s ease-in-out; /** Chrome & Safari **/
-  /*  -moz-transition: all 1s ease-in-out; /** Firefox **/
-  /*  -o-transition: all 1s ease-in-out; /** Opera **/
-}/*
+.form-control::-webkit-input-placeholder       {opacity: 1; transition: opacity 0.5s ease;}
+.form-control::-moz-placeholder                {opacity: 1; transition: opacity 0.5s ease;}
+.form-control:-moz-placeholder                 {opacity: 1; transition: opacity 0.5s ease;}
+.form-control:-ms-input-placeholder            {opacity: 1; transition: opacity 0.5s ease;}
+.form-control:focus::-webkit-input-placeholder {opacity: 0; transition: opacity 0.5s ease;}
+.form-control:focus::-moz-placeholder          {opacity: 0; transition: opacity 0.5s ease;}
+.form-control:focus:-moz-placeholder           {opacity: 0; transition: opacity 0.5s ease;}
+.form-control:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.5s ease;}
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px  #ccffcc inset !important;
+}

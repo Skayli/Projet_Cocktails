@@ -53,7 +53,7 @@
 				}
 				display($sousCateg);
 			}	
-			$superCateg = $superCateg.'</ul>';	
+			$superCateg = $superCateg.'</ul>';
 		}
 	}
 	//FIN display() 
@@ -76,10 +76,43 @@
 
 		foreach($data as $user)
 		{
-			if($user->username == $_COOKIE["user"]["username"] && isset($user->cocktailsPreferes))
+			if($user->username == $_COOKIE["user"]["username"])
 			{	
-				setCookie("user[cocktailsPreferes]", json_encode($user->cocktailsPreferes), time() + 60*60*24*365);
-				$_COOKIE["user"]["cocktailsPreferes"] = json_encode($user->cocktailsPreferes);
+				setCookie("user[forename]", $user->forename, time() + 60*60*24*365);
+				$_COOKIE["user"]["forename"] = $user->forename;
+				
+				setCookie("user[name]", $user->name, time() + 60*60*24*365);
+				$_COOKIE["user"]["name"] = $user->name;
+				
+				setCookie("user[gender]", $user->gender, time() + 60*60*24*365);
+				$_COOKIE["user"]["gender"] = $user->gender;
+				
+				setCookie("user[email]", $user->email, time() + 60*60*24*365);
+				$_COOKIE["user"]["email"] = $user->email;
+				
+				setCookie("user[password]", $user->password, time() + 60*60*24*365);
+				$_COOKIE["user"]["password"] = $user->password;
+				
+				setCookie("user[dateNaissance]", $user->dateNaissance, time() + 60*60*24*365);
+				$_COOKIE["user"]["dateNaissance"] = $user->dateNaissance;
+				
+				setCookie("user[adresse]", $user->adresse, time() + 60*60*24*365);
+				$_COOKIE["user"]["adresse"] = $user->adresse;
+				
+				setCookie("user[codePostal]", $user->codePostal, time() + 60*60*24*365);
+				$_COOKIE["user"]["codePostal"] = $user->codePostal;
+				
+				setCookie("user[ville]", $user->ville, time() + 60*60*24*365);
+				$_COOKIE["user"]["ville"] = $user->ville;
+				
+				setCookie("user[telephone]", $user->telephone, time() + 60*60*24*365);
+				$_COOKIE["user"]["telephone"] = $user->telephone;
+				
+				if(isset($user->cocktailsPreferes))
+				{
+					setCookie("user[cocktailsPreferes]", json_encode($user->cocktailsPreferes), time() + 60*60*24*365);
+					$_COOKIE["user"]["cocktailsPreferes"] = json_encode($user->cocktailsPreferes);
+				}
 			}
 		}		
 		

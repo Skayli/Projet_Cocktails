@@ -148,21 +148,36 @@ $(document).ready(function() {
 		$('.form-control').focus(function() {
 			$(this).next("span").css('display', 'none');
 		});
+		
+		$('.register-switch').click(function() {
+			$('#register-gender-error').css('display','none');
+		});
 	
 		//Validation du formulaire "INSCRIPTION"
 		$('#register-form').submit(function(e) {
 			var form = this;
 			
 			$("#register-username").blur();
+			$("#register-forename").blur();
+			$("#register-name").blur();
 			$("#register-email").blur();
 			$("#register-password").blur();
 			$("#register-confirm-password").blur();
+			$('#register-birth-date').blur();
+			$('#register-address').blur();
+			$('#register-cp').blur();
+			$('#register-town').blur();
+			$('#register-telephone').blur();
+			
 			
 			//On empeche le formulaire de se valider
 			e.preventDefault();
 			
 			//Recupération des données pour les valider nous meme
 			var username = $('#register-username').val();
+			var forename = $('#register-forename').val();
+			var name = $('#register-name').val();
+			var gender = $("input[name=switch-gender]:checked").val();
 			var email = $('#register-email').val();
 			var password = $('#register-password').val();
 			var confirmPassword = $('#register-confirm-password').val();
@@ -177,9 +192,9 @@ $(document).ready(function() {
 			var telephone = $('#register-telephone').val();
 			
 			//Si tout est bon, on enregistre les données, on affiche le bon déroulement des opérations et on retourne à la page d'accueil
-			if(isUsernameOK(username) && isEmailOk(email) && isPasswordSafeEnough(password) && passwordAreIdentical(password, confirmPassword) && isUsernameOrEmaiNotlAlreadyUsed && isDateNaissanceOk(dateNaissance) && isAdresseOk(adresse) && isCPOk(codePostal) && isVilleOk(ville) && isTelephoneOk(telephone))
+			if(isUsernameOK(username) && isForenameOk(forename) && isNameOk(name) && isGenderSet(gender) && isEmailOk(email) && isPasswordSafeEnough(password) && passwordAreIdentical(password, confirmPassword) && isUsernameOrEmaiNotlAlreadyUsed && isDateNaissanceOk(dateNaissance) && isAdresseOk(adresse) && isCPOk(codePostal) && isVilleOk(ville) && isTelephoneOk(telephone))
 			{
-				saveDataIntoJSONFile(username, email, password, dateNaissance, adresse, codePostal, ville, telephone); //Sauvegarde dans 'user.json'
+				saveDataIntoJSONFile(username, forename, name, gender, email, password, dateNaissance, adresse, codePostal, ville, telephone); //Sauvegarde dans 'user.json'
 				
 				
 				swal({												//Alerte : succes de l'enregistement
@@ -199,16 +214,19 @@ $(document).ready(function() {
 			} else {
 				
 				//debug
-				console.log("username -> "+isUsernameOK(username));
-				console.log("email -> "+isEmailOk(email));
-				console.log("password strengh -> " + isPasswordSafeEnough(password));
-				console.log("arePasswordIdentical ? -> " + passwordAreIdentical(password, confirmPassword));
+				console.log("username -> " + 						isUsernameOK(username));
+				console.log("forename -> " + 						isUsernameOK(forename));
+				console.log("name -> " + 							isUsernameOK(username));
+				console.log("gender ->" + 							isGenderSet(gender));
+				console.log("email -> "+ 							isEmailOk(email));
+				console.log("password strengh -> " + 				isPasswordSafeEnough(password));
+				console.log("arePasswordIdentical ? -> " + 			passwordAreIdentical(password, confirmPassword));
 				console.log("isUsernameOrEmaiNotlAlreadyUsed -> " + isUsernameOrEmaiNotlAlreadyUsed);
-				console.log("dateNaissance -> " + isDateNaissanceOk(dateNaissance));
-				console.log("adresse -> " + isDateNaissanceOk(dateNaissance));
-				console.log("codePostal -> " + isCPOk(codePostal));
-				console.log("ville -> " + isVilleOk(ville));
-				console.log("telephone -> " + isTelephoneOk(telephone));
+				console.log("dateNaissance -> " + 					isDateNaissanceOk(dateNaissance));
+				console.log("adresse -> " + 						isDateNaissanceOk(dateNaissance));
+				console.log("codePostal -> " + 						isCPOk(codePostal));
+				console.log("ville -> " + 							isVilleOk(ville));
+				console.log("telephone -> " + 						isTelephoneOk(telephone));
 				
 				if(!isUsernameOrEmaiNotlAlreadyUsed) //cas ou l'utilisateur est deja connu
 				{
@@ -235,15 +253,18 @@ $(document).ready(function() {
 					})
 					
 					//Affichage des messages d'erreurs de chaque input concerné
-					displayIfNeeded(isUsernameOK(username), $("#register-username-error"));
-					displayIfNeeded(isEmailOk(email), $("#register-email-error"));
-					displayIfNeeded(isPasswordSafeEnough(password), $("#register-password-error"));
-					displayIfNeeded(passwordAreIdentical(password, confirmPassword), $("#register-confirm-password-error"));
-					displayIfNeeded(isDateNaissanceOk(dateNaissance), $("#register-birth-date-error"));
-					displayIfNeeded(isAdresseOk(adresse), $("#register-address-error"));
-					displayIfNeeded(isCPOk(codePostal), $("#register-cp-error"));
-					displayIfNeeded(isVilleOk(ville), $("#register-town-error"));
-					displayIfNeeded(isTelephoneOk(telephone), $("#register-telephone-error"));
+					displayIfNeeded(isUsernameOK(username), 						 $("#register-username-error")); 		//username
+					displayIfNeeded(isForenameOk(forename),							 $("#register-forename-error"));		//forename
+					displayIfNeeded(isNameOk(name),									 $("#register-name-error"));			//name
+					displayIfNeeded(isGenderSet(gender),							 $("#register-gender-error"));			//gender
+					displayIfNeeded(isEmailOk(email), 								 $("#register-email-error"));			//email
+					displayIfNeeded(isPasswordSafeEnough(password), 				 $("#register-password-error"));		//password
+					displayIfNeeded(passwordAreIdentical(password, confirmPassword), $("#register-confirm-password-error"));//confirm password
+					displayIfNeeded(isDateNaissanceOk(dateNaissance), 				 $("#register-birth-date-error"));		//birth date
+					displayIfNeeded(isAdresseOk(adresse), 							 $("#register-address-error"));			//address
+					displayIfNeeded(isCPOk(codePostal), 							 $("#register-cp-error"));				//cp
+					displayIfNeeded(isVilleOk(ville), 								 $("#register-town-error"));			//town
+					displayIfNeeded(isTelephoneOk(telephone), 						 $("#register-telephone-error"));		//telephone
 				}
 			}
 				
@@ -256,6 +277,25 @@ $(document).ready(function() {
 			return username.match(patternUsername);
 		}
 		
+		function isForenameOk(forname)
+		{
+			var patternForname = /^[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]*\-?[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]{2,}$/i;
+			return forname.match(patternForname);
+		}
+		
+		function isNameOk(name)
+		{
+			var patternName = /^[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]+([\-\'\s]?[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]{2,})+$/i;
+			return name.match(patternName);
+		}
+		
+		function isGenderSet(gender)
+		{
+			if(gender.length > 0)
+				return true;
+			
+			return false;
+		}
 		//Vérifie le format du mail de l'utilisateur
 		function isEmailOk(email)
 		{
@@ -322,13 +362,13 @@ $(document).ready(function() {
 		}
 
 		//Sauvegarde les données dans le fichier 'users.json'
-		function saveDataIntoJSONFile(username, email, password, dateNaissance, adresse, codePostal, ville, telephone)
+		function saveDataIntoJSONFile(username, forename, name, gender, email, password, dateNaissance, adresse, codePostal, ville, telephone)
 		{
 			$.ajax({
 				type:"GET",
 				url: 'saveJson.php',
 				dataType:'json',
-				data: { username:username, email:email, password:password, dateNaissance:dateNaissance, adresse:adresse, codePostal:codePostal, ville:ville, telephone:telephone },
+				data: { username:username, forename:forename, name:name, gender:gender, email:email, password:password, dateNaissance:dateNaissance, adresse:adresse, codePostal:codePostal, ville:ville, telephone:telephone },
 				success:function() {alert("OK"); },
 				failure:function() {alert("Error!"); }
 			});
@@ -470,7 +510,7 @@ $(document).ready(function() {
 	$("#cocktailsPreferes").click(function() {
 		console.log("click");
 	});
-	
+
 });
 
 		
