@@ -348,3 +348,11 @@ pre {
 input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0 1000px  #ccffcc inset !important;
 }
+
+.data-input {
+	display:none;
+}
+
+.data-input-password {
+	margin-bottom:10px;
+}

@@ -39,11 +39,20 @@ $(document).ready(function() {
 				viewMode: 'years',
 				showClear: true,
 				maxDate: $.now(),
-				minDate: new Date(1900,1,1)
+				minDate: new Date(1900,1,1),
 			});
 			
 			$('#register-birth-date').val('');
-			
+
+			$('#data-dateNaissance').datetimepicker({
+				format: 'DD/MM/YYYY',
+				viewMode: 'days',
+				showClear: true,
+				maxDate: $.now(),
+				minDate: new Date(1900,1,1),
+				useCurrent: false
+			});
+				
         });
 
 		$('#login-form-link').click(function(e) {
@@ -510,7 +519,142 @@ $(document).ready(function() {
 	$("#cocktailsPreferes").click(function() {
 		console.log("click");
 	});
+	
+/* PARTIE USERDATA */
+	$("#display-data-input").click(function() {
+		
+		$(".data-input").each(function() {
+			$(this).css('display','block');
+		});
+		
+		$(".data-display").each(function() {
+			$(this).css('display','none');
+		});
+		
+		$("html, body").stop().animate({scrollTop:0}, 500);
+	});
+	
+	$("#cancel-data").click(function() {
+		
+		$(".data-input").each(function() {
+			$(this).css('display','none');
+		});
+		
+		$(".data-display").each(function() {
+			$(this).css('display','block');
+		});
+		
+		$("html, body").stop().animate({scrollTop:0}, 500);
+	});
+	
+	function isNewPasswordOk(oldUsername, newCurrentPassword, newNewPassword, newConfirmPassword) {
+		var check = false;
+		var checkOldPassword = false;
 
+			if(newCurrentPassword.length != 0 || newNewPassword.length != 0 || newConfirmPassword.length != 0) {
+					$.ajax ({
+						'global':false,
+						'async':false,
+						'cache':false,
+						headers: {
+							'Cache-Control': 'no-cache, no-store, must-revalidate', 
+							'Pragma': 'no-cache', 
+							'Expires': '0'
+						},
+						'url': 'users.json',
+						'dataType':'json',
+						'cache':'false',
+						'success': function(data) {
+							$.each(data, function(user, details) {
+								if(oldUsername.toLowerCase() == details["username"].toLowerCase() && newCurrentPassword == details["password"])
+								{
+									checkOldPassword = true;
+								} 
+							});
+						}
+					});
+			
+				if(checkOldPassword && isPasswordSafeEnough(newNewPassword) && passwordAreIdentical(newNewPassword, newConfirmPassword)) {
+					check = true;
+				}
+		
+				return check;
+			} else {
+				return true;
+			}
+	}
+	
+	function isUsernameAlreadyUsed(oldUsername, newUsername) {
+		var isUsernameAlreadyUsed = false;
+		
+		if(oldUsername.toLowerCase() != newUsername.trim().toLowerCase()) {
+			$.ajax ({
+				'global':false,
+				'async':false,
+				'cache':false,
+				headers: {
+					'Cache-Control': 'no-cache, no-store, must-revalidate', 
+					'Pragma': 'no-cache', 
+					'Expires': '0'
+				},
+				'url': 'users.json',
+				'dataType':'json',
+				'cache':'false',
+				'success': function(data) {
+					$.each(data, function(user, details) {
+						if(newUsername.trim().toLowerCase() == details["username"].toLowerCase()) {
+							isUsernameAlreadyUsed = true;
+						}
+					});
+				}
+			});
+		}
+
+		
+		return !isUsernameAlreadyUsed;
+			
+	}
+	
+	$("#save-data").click(function() {
+		var oldUsername = $("#data-old-username").val();
+		var newUsername = $("#data-username").val();
+		var newForename = $("#data-forename").val();
+		var newName = $("#data-name").val();
+		var newGender = $("input[name=switch-gender]:checked").val();
+		var newEmail = $("#data-email").val();
+		var newCurrentPassword = $("#data-password-current").val();
+		var newNewPassword = $("#data-password-new").val();
+		var newConfirmPassword = $("#data-password-new-confirm").val();
+		var newDateNaissance = $("#data-dateNaissance").val();
+		var newAdresse = $("#data-adresse").val();
+		var newCp = $("#data-cp").val();
+		var newVille = $("#data-ville").val();
+		var newTelephone = $("#data-telephone").val();
+		
+		console.clear();
+	/* 	console.log(isUsernameOK(newUsername));
+		console.log(isForenameOk(newForename));
+		console.log(isNameOk(newName));
+		console.log(isGenderSet(newGender));
+		console.log(isEmailOk(newEmail));
+		console.log(oldUsername);
+		
+		console.log(isNewPasswordOk(oldUsername, newCurrentPassword,newNewPassword, newConfirmPassword));
+		
+		console.log(isDateNaissanceOk(newDateNaissance));
+		console.log(isAdresseOk(newAdresse));
+		console.log(isCPOk(newCp));
+		console.log(isVilleOk(newVille));
+		console.log(isTelephoneOk(newTelephone)); */
+		console.log(newUsername);
+		 if(isUsernameOK(oldUsername) && isUsernameAlreadyUsed(oldUsername, newUsername) && isForenameOk(newForename) && isNameOk(newName) && isGenderSet(newGender) && isEmailOk(newEmail) && isNewPasswordOk(oldUsername, newCurrentPassword,newNewPassword, newConfirmPassword) && isDateNaissanceOk(newDateNaissance) && isAdresseOk(newAdresse) && isCPOk(newCp) && isVilleOk(newVille) && isTelephoneOk(newTelephone)) {
+			console.log("ok");
+		} else {
+			console.log("non ok");
+		}
+		
+
+	});
 });
 
 		
