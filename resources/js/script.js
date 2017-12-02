@@ -615,6 +615,17 @@ $(document).ready(function() {
 			
 	}
 	
+	function updateUserData(oldUsername, newUsername, newForename, newName, newGender, newEmail, newNewPassword, newDateNaissance, newAdresse, newCp, newVille, newTelephone) {
+			$.ajax({
+				type:"GET",
+				url: 'updateUser.php',
+				dataType:'json',
+				data: { oldUsername:oldUsername, newUsername:newUsername, newForename:newForename, newName:newName, newGender:newGender, newEmail:newEmail, newPassword:newNewPassword, newDateNaissance:newDateNaissance, newAdresse:newAdresse, newCp:newCp, newVille:newVille, newTelephone:newTelephone },
+				success:function() {alert("OK"); },
+				failure:function() {alert("Error!"); }
+			});
+	}
+	
 	$("#save-data").click(function() {
 		var oldUsername = $("#data-old-username").val();
 		var newUsername = $("#data-username").val();
@@ -647,10 +658,33 @@ $(document).ready(function() {
 		console.log(isVilleOk(newVille));
 		console.log(isTelephoneOk(newTelephone)); */
 		console.log(newUsername);
-		 if(isUsernameOK(oldUsername) && isUsernameAlreadyUsed(oldUsername, newUsername) && isForenameOk(newForename) && isNameOk(newName) && isGenderSet(newGender) && isEmailOk(newEmail) && isNewPasswordOk(oldUsername, newCurrentPassword,newNewPassword, newConfirmPassword) && isDateNaissanceOk(newDateNaissance) && isAdresseOk(newAdresse) && isCPOk(newCp) && isVilleOk(newVille) && isTelephoneOk(newTelephone)) {
-			console.log("ok");
+		 if(isUsernameOK(newUsername) && isUsernameAlreadyUsed(oldUsername, newUsername) && isForenameOk(newForename) && isNameOk(newName) && isGenderSet(newGender) && isEmailOk(newEmail) && isNewPasswordOk(oldUsername, newCurrentPassword,newNewPassword, newConfirmPassword) && isDateNaissanceOk(newDateNaissance) && isAdresseOk(newAdresse) && isCPOk(newCp) && isVilleOk(newVille) && isTelephoneOk(newTelephone)) {
+			
+			updateUserData(oldUsername, newUsername, newForename, newName, newGender, newEmail, newNewPassword, newDateNaissance, newAdresse, newCp, newVille, newTelephone); //Sauvegarde dans 'user.json'
+				
+				
+				swal({												//Alerte : succes de l'enregistement
+				  type: 'success',
+				  title: 'Modifications sauvegardées',
+				  showConfirmButton: true,
+				  focusConfirm: true,
+				  confirmButtonText : "Retour à la page d'accueil",
+				  allowOutsideClick:false
+				}).then(function() {
+					setTimeout(function () {
+						location.href = location.pathname;
+					}, 500);
+				})
 		} else {
-			console.log("non ok");
+			swal({
+				title: '<i>Renseignements Incorrects</i>',
+				type: 'error',
+				html:"Veuillez vérifier les informations saisies",
+				showCloseButton: true,
+				showCancelButton: false,
+				focusConfirm: true,
+				confirmButtonText: "Compris !"
+			})
 		}
 		
 
