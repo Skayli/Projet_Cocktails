@@ -158,12 +158,17 @@
 							array_pop($superCategories);
 							echo "<p id='fil-ariane'>Ingrédients : ".implode(" > ", array_reverse($superCategories))."</p>";
 					} else {
+						if(isset($_POST["divCocktails"])) {
+							
 					?>
+					<p>Mes cocktails favoris !</p>
 					
+						<?php } else { ?>
 					<p>Retrouvez tous les cocktails et leur recette !</p>
 					
 					<?php 
 						}
+					}
 					
 						if(isset($_COOKIE["user"]))
 						{
