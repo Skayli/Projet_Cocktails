@@ -18,11 +18,11 @@
 		//Le test sert à savoir s'il faut créer un sous*menu parce que l'élément possède des sous-catégories
 		if(array_key_exists("sous-categorie",$Hierarchie[$topCateg]))
 		{
-			$superCateg = $superCateg.'<li class="dropdown-submenu li-submenu getCategorie" value="'.$topCateg.'"><a tabindex="-1" href="#">'.$topCateg.'</a>';
+			$superCateg = $superCateg.'<li class="dropdown-submenu li-submenu ingredient-recherche" id="'.$topCateg.'"><a tabindex="-1" href="#">'.$topCateg.'</a>';
 		} 
 		else 
 		{
-			$superCateg = $superCateg.'<li class="getCategorie" value="'.$topCateg.'"><a tabindex="-1" href="#">'.$topCateg.'</a>';
+			$superCateg = $superCateg.'<li class="ingredient-recherche" id="'.$topCateg.'"><a tabindex="-1" href="#">'.$topCateg.'</a>';
 		}
 		
 		display($topCateg);
@@ -45,11 +45,11 @@
 			{
 				if(array_key_exists("sous-categorie", $Hierarchie[$sousCateg]))
 				{
-					$superCateg = $superCateg.'<li class="dropdown-submenu li-submenu getCategorie"  value="'.$sousCateg.'"><a tabindex="-1" href="#">'.$sousCateg.'</a>';
+					$superCateg = $superCateg.'<li class="dropdown-submenu li-submenu ingredient-recherche"  id="'.$sousCateg.'"><a tabindex="-1" href="#">'.$sousCateg.'</a>';
 				}
 				else 
 				{
-					$superCateg = $superCateg.'<li class="getCategorie" value="'.$sousCateg.'"><a tabindex="-1" href="#">'.$sousCateg.'</a>';
+					$superCateg = $superCateg.'<li class="ingredient-recherche" id="'.$sousCateg.'"><a tabindex="-1" href="#">'.$sousCateg.'</a>';
 				}
 				display($sousCateg);
 			}	
@@ -218,6 +218,7 @@
 				
 			<form method="post" action="#" id="changePage">
 				<input type="hidden" name="page"/>
+				<input type="hidden" name="ingredient"/>
 			</form>
 			
 			</div>

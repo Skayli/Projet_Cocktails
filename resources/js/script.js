@@ -11,18 +11,18 @@ $(document).ready(function() {
 		var pattern = html.match(/\s*\n[\t\s]*/);
 		$(this).html(html.replace(new RegExp(pattern, "g"),'\n'));
 	});
-
-	//Permet d'avoir un aliment (via l'input HIDDEN de la navbar)
-	$(".getCategorie").click(function(event){
-		event.stopPropagation();
-		$("#search-aliment").val($(this).attr("value"));
-		alert("Vous avez choisi : " + $("#search-aliment").val());
-	});
 	
 	//Gestion du bouton de la navbar surligné
 	$(".btn-navbar").click(function(e) {
 		$(".btn-navbar").removeClass('active');
 		$(this).addClass("active");
+	});
+	
+	$(".ingredient-recherche").click(function(e) {
+		e.stopPropagation();
+		$("#changePage").find('input[name="page"]').val("recettes");
+		$("#changePage").find('input[name="ingredient"]').val(this.id);
+		$("#changePage").submit();
 	});
 	
 	//Changement de page : envoie de la page via la valeur du bouton cliqué et soumission du formulaire "changePage" afin de charger le bon 'include'
@@ -516,9 +516,16 @@ $(document).ready(function() {
 		
 	});
 	
-	$("#cocktailsPreferes").click(function() {
-		console.log("click");
-	});
+	/* $("#cocktailsPreferes").click(function() {
+		$(".allCocktails").css("display","none");
+		$(".cocktailsPreferes").css("display", "block");
+	}); */
+	
+	/* $("#allCocktails").click(function() {
+		$(".cocktailsPreferes").css("display","none");
+		$(".allCocktails").css("display", "block");
+		location.reload();
+	}); */
 	
 /* PARTIE USERDATA */
 	$("#display-data-input").click(function() {

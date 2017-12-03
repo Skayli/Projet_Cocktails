@@ -1,8 +1,60 @@
 ﻿	<?php 
 	
-		$images = glob("Photos/*.jpg");		
+		$images = glob("Photos/*.jpg");
+		
 		asort($Recettes);
+		
+		$tabIngredients; 
+		$superCategories;
+		
+		
+		if(isset($_POST["ingredient"]) && $_POST["ingredient"] != "") {
+			
+			$ingredientRecherche = $_POST["ingredient"];
+			
+			$tabRecettes = array();
+			
+			$tabIngredients = array();
+			$tabIngredients[] = $ingredientRecherche;
+			
+			$superCategories = array();
+			$superCategories[] = $ingredientRecherche;
+			
+			getSousCategories($ingredientRecherche);
+			getSuperCategories($ingredientRecherche);
+			
+			foreach($Recettes as $recette => $details) {
+				if(count(array_intersect($details["index"], $tabIngredients))) {
+					$tabRecettes[] = $details;
+				}
+			}
+			$Recettes = $tabRecettes;
+		}
+		
+		function getSousCategories($sousCateg) {
+			global $Hierarchie;
+			global $tabIngredients;
 	
+				if(array_key_exists("sous-categorie", $Hierarchie[$sousCateg]))
+				{
+					foreach($Hierarchie[$sousCateg]["sous-categorie"] as $sousSousCateg) 
+					{
+						$tabIngredients[] = $sousSousCateg;
+						getSousCategories($sousSousCateg);
+					}
+				}
+		}
+		
+		function getSuperCategories($categorie) {
+			global $Hierarchie;
+			global $superCategories;
+			
+			if(array_key_exists("super-categorie", $Hierarchie[$categorie]))
+				{
+					$superCategories[] = $Hierarchie[$categorie]["super-categorie"][0];
+					getSuperCategories($Hierarchie[$categorie]["super-categorie"][0]);	
+				}
+		}
 		
 		function hasAPhoto($titreCocktail)
 		{
@@ -66,35 +118,72 @@
 			return  $launch;
 		}
 		
-		function isCocktailPrefere($index)
+		function isCocktailPrefere($titre)
 		{
-			if(isset($_COOKIE["user"]["cocktailsPreferes"]) && is_array(json_decode($_COOKIE["user"]["cocktailsPreferes"])) && (in_array($index, json_decode($_COOKIE["user"]["cocktailsPreferes"]))))
+			if(isset($_COOKIE["user"]["cocktailsPreferes"]) && is_array(json_decode($_COOKIE["user"]["cocktailsPreferes"])) && (in_array($titre, json_decode($_COOKIE["user"]["cocktailsPreferes"]))))
 			{
 				return true;
 			} else {
 				return false;
 			}
 		}
+		
+		function getCocktailsPreferes() {
+			$tabCocktailsPreferes = array();
+			global $Recettes;
+			foreach($Recettes as $recette => $details) {
+				if(isCocktailPrefere($details["titre"])) {
+					$tabCocktailsPreferes[] = $details;
+				}
+			}
+			
+			return $tabCocktailsPreferes;
+		}
 	?>
-	 
-
+	
+	
 	
 	<h1>Cocktails</h1>
-
-		<p>Retrouvez tous les cocktails et leur recette !</p>
-		
-
+	
+	<?php 
+		if(isset($_POST["divCocktails"])) {
+			$Recettes = getCocktailsPreferes();
+		}
+	?>
+	
 			<div class="allCocktails">
-					<?php
+			
+					<?php 
+					if(isset($_POST["ingredient"]) && $_POST["ingredient"] != "") {
+							array_pop($superCategories);
+							echo "<p id='fil-ariane'>Ingrédients : ".implode(" > ", array_reverse($superCategories))."</p>";
+					} else {
+					?>
+					
+					<p>Retrouvez tous les cocktails et leur recette !</p>
+					
+					<?php 
+						}
 					
 						if(isset($_COOKIE["user"]))
 						{
+							if(!isset($_POST["divCocktails"])) {
 					?>
-						<input class="btn btn-primary" id="cocktailsPreferes" type="button" value="Mes cocktails préférés"/>	
+						<form method="POST" action="">
+							<input type="submit" class="btn btn-primary" id="cocktailsPreferes" type="button" value="Mes cocktails préférés" name="all"/>
+							<input type="hidden" name="page" value="recettes">
+							<input type="hidden" name="divCocktails" value="preferes">
+						</form>
+					<?php	} else { ?>
+						<form method="POST" action="">
+							<input type="submit" class="btn btn-primary" id="cocktailsPreferes" type="button" value="Tous les cocktails" name="all"/>
+							<input type="hidden" name="page" value="recettes">
+						</form>
 					<?php 
+						
+							}
 						}
-		
-					
+						
 						foreach($Recettes as $index => $details)
 						{
 							//Pour mettre à la ligne la partie entre parenthese dans les titres (et faire plus propre)
@@ -157,7 +246,7 @@
 							{
 					?>
 								<div class="pretty p-icon p-toggle p-plain p-smooth" >
-									<input type="checkbox" class="pretty-checkbox" id="checkbox-<?php echo $index; ?>" <?php if(isCocktailPrefere($index)) { echo "checked"; } ?> role="button" title="<?php if(isCocktailPrefere($index)) { echo "Retirer des favoris"; } else { echo "Ajouter aux favoris"; } ?>" data-toggle="tooltip" data-placement="top"/>
+									<input type="checkbox" class="pretty-checkbox" id="checkbox-<?php echo $details["titre"]; ?>" <?php if(isCocktailPrefere($details["titre"])) { echo "checked"; } ?> role="button" title="<?php if(isCocktailPrefere($details["titre"])) { echo "Retirer des favoris"; } else { echo "Ajouter aux favoris"; } ?>" data-toggle="tooltip" data-placement="top"/>
 									<div class="state p-off">
 										<i class="icon glyphicon glyphicon-heart-empty" ></i>
 									</div>
@@ -175,18 +264,3 @@
 						} 
 					?>
 			</div>
-			
-			<div class="cocktailsPreferes">
-				<?php 
-					if(isset($_COOKIE["user"]))
-					{
-				?>
-					<div class="col-sm-10 col-sm-offset-1">
-						<input class="btn btn-primary" id="allCocktails" type="button" value="Tous les cocktails">
-					</div>
-					
-				<?php	
-					}
-				?>
-			
-		</div>

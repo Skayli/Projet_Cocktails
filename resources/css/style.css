@@ -312,12 +312,13 @@ pre {
 	color:pink;
 }
 
-#cocktailsPreferes {
+#cocktailsPreferes,
+#allCocktails {
 	margin-bottom:20px;
 }
 	
 .cocktailsPreferes {
-	visibility:hidden;
+	display:none;
 }
 
 .tooltip {
@@ -355,4 +356,8 @@ input:-webkit-autofill {
 
 .data-input-password {
 	margin-bottom:10px;
+}
+
+#userInfo {
+	text-decoration: underline;
 }

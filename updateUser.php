@@ -28,7 +28,11 @@
 			$user->username = $newUsername;
 			$user->forename = $newPrenom;
 			$user->name = $newNom;
-			$user->password = $newPassword;
+			
+			if($newPassword != "") {
+				$user->password = $newPassword;
+			} 
+			
 			$user->gender = $newGenre;
 			$user->email = $newEmail;
 			$user->dateNaissance = $newDateNaissance;
@@ -45,6 +49,9 @@
 				
 			setCookie("user[name]", $user->name, time() + 60*60*24*365);
 			$_COOKIE["user"]["name"] = $user->name;
+			
+			setCookie("user[password]", $user->password, time() + 60*60*24*365);
+			$_COOKIE["user"]["password"] = $user->password;
 			
 			setCookie("user[gender]", $user->gender, time() + 60*60*24*365);
 			$_COOKIE["user"]["gender"] = $user->gender;
