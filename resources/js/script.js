@@ -1,23 +1,21 @@
 $(document).ready(function() {
 	
+	/* INITIALISATIONS */
 	$.ajaxSetup({ cache: false });
+	
+	//Création d'un mask d'input (cf http://digitalbush.com/projects/masked-input-plugin/)
 	$('#register-cp').mask("99999");
 	$('#register-telephone').mask("99 99 99 99 99");
+	/* FIN INITIALISATIONS µ/
 	
-/* PARTIE ACCUEIL*/	
-	//Mise en forme des balise pre & code (sera surement inutile plus tard)
-	$("pre code").each(function(){
-		var html = $(this).html();
-		var pattern = html.match(/\s*\n[\t\s]*/);
-		$(this).html(html.replace(new RegExp(pattern, "g"),'\n'));
-	});
-	
-	//Gestion du bouton de la navbar surligné
+	/* PARTIE ACCUEIL*/	
+	//Met en valeur le bouton de la navbar correspondant à la page actuelle
 	$(".btn-navbar").click(function(e) {
 		$(".btn-navbar").removeClass('active');
 		$(this).addClass("active");
 	});
 	
+	//Envoie l'ingrédient recherché lors d'un click dans sur un ingrédient de la navbar
 	$(".ingredient-recherche").click(function(e) {
 		e.stopPropagation();
 		$("#changePage").find('input[name="page"]').val("recettes");
@@ -30,11 +28,12 @@ $(document).ready(function() {
 		$("#changePage").find('input[name="page"]').val($(this).attr("value"));
 		$("#changePage").submit();
 	});
+	/* FIN PARTIE ACCUEIL */
 	
-/* PARTIE LOGIN */
+	/* PARTIE LOGIN */
 		//Initialisation du format de l'input 'birth-date'
 		$(function () {
-            $('#register-birth-date').datetimepicker({
+            $('#register-birth-date').datetimepicker({ //Dans la partie inscription
 				format: 'DD/MM/YYYY',
 				viewMode: 'years',
 				showClear: true,
@@ -44,7 +43,7 @@ $(document).ready(function() {
 			
 			$('#register-birth-date').val('');
 
-			$('#data-dateNaissance').datetimepicker({
+			$('#data-dateNaissance').datetimepicker({ //Dans la partie modification des données de l'utilisateur connecté
 				format: 'DD/MM/YYYY',
 				viewMode: 'days',
 				showClear: true,
@@ -55,6 +54,7 @@ $(document).ready(function() {
 				
         });
 
+		//Style pour le changement de formulaire CONNEXION / INSCRIPTION
 		$('#login-form-link').click(function(e) {
 			$("#login-form").delay(100).fadeIn(100);
 			$("#register-form").fadeOut(100);
@@ -63,6 +63,7 @@ $(document).ready(function() {
 			e.preventDefault();
 		});
 		
+		//Style pour le changement de formulaire CONNEXION / INSCRIPTION
 		$('#register-form-link').click(function(e) {
 			$("#register-form").delay(100).fadeIn(100);
 			$("#login-form").fadeOut(100);
@@ -71,7 +72,7 @@ $(document).ready(function() {
 			e.preventDefault();
 		});
 		
-		//Formulaire de connexion
+		//Fonction de validation du formulaire de connexion
 		$('#login-form').submit(function(e) {
 			e.preventDefault();
 				
@@ -79,7 +80,7 @@ $(document).ready(function() {
 			var username = $('#login-username').val();
 			var password = $('#login-password').val();
 			
-			if(!checkDataBaseForConnexion(username, password))
+			if(!checkDataBaseForConnexion(username, password))	//Verifie la concordance username / password
 			{
 				
 				swal({
@@ -157,7 +158,7 @@ $(document).ready(function() {
 		$('.form-control').focus(function() {
 			$(this).next("span").css('display', 'none');
 		});
-		
+			//Pareil mais pour le genre
 		$('.register-switch').click(function() {
 			$('#register-gender-error').css('display','none');
 		});
@@ -261,7 +262,7 @@ $(document).ready(function() {
 						confirmButtonText: "Compris !"
 					})
 					
-					//Affichage des messages d'erreurs de chaque input concerné
+					//Affichage des messages d'erreurs de chaque input non valide
 					displayIfNeeded(isUsernameOK(username), 						 $("#register-username-error")); 		//username
 					displayIfNeeded(isForenameOk(forename),							 $("#register-forename-error"));		//forename
 					displayIfNeeded(isNameOk(name),									 $("#register-name-error"));			//name
@@ -286,18 +287,21 @@ $(document).ready(function() {
 			return username.match(patternUsername);
 		}
 		
+		//Vérifie que le prénom est OK
 		function isForenameOk(forname)
 		{
 			var patternForname = /^[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]*\-?[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]{2,}$/i;
 			return forname.match(patternForname);
 		}
 		
+		//Verifie que le nom est OK
 		function isNameOk(name)
 		{
 			var patternName = /^[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]+([\-\'\s]?[a-záàâäãåçéèêëíìîïñóòôöõúùûüýÿæœÁÀÂÄÃÅÇÉÈÊËÍÌÎÏÑÓÒÔÖÕÚÙÛÜÝŸÆŒ]{2,})+$/i;
 			return name.match(patternName);
 		}
 		
+		//Verifie qu'un genre est selectionné
 		function isGenderSet(gender)
 		{
 			if(gender.length > 0)
@@ -455,8 +459,11 @@ $(document).ready(function() {
 					
 			return check;
 		}
+	/* FIN PARTIE COCKTAILS */
 		
-/* PARTIE COCKTAILS */
+	/* PARTIE COCKTAILS */
+
+	//Fait apparaitre un bouton pour remonter lorsque l'utilisateur scroll
 	$(window).scroll(function () {
 		if ($(this).scrollTop() > 50) {
 			$('#back-to-top').fadeIn();
@@ -464,7 +471,8 @@ $(document).ready(function() {
 			$('#back-to-top').fadeOut();
 		}
 	});
-	// scroll body to 0px on click
+	
+	//Retourner en haut de la page après un click sur le bouton qui apparait après un scroll
 	$('#back-to-top').click(function () {
 		$('#back-to-top').tooltip('hide');
 		$('body,html').animate({
@@ -473,10 +481,12 @@ $(document).ready(function() {
 		return false;
 	});
 	
+	//Tooltip apparaissant sur les boutons pour remonter et de favoris
 	$('#back-to-top').tooltip({shown:"ready"});
 	$('.pretty-checkbox').tooltip({shown:"ready"});
 	
 
+	//Ajout-Retrait d'un cocktail des favoris
 	$('.pretty-checkbox').click(function() {
 		var indexCocktail = $(this).prop('id').split('-');
 		
@@ -485,7 +495,7 @@ $(document).ready(function() {
 		
 		if($(this).prop('checked'))
 		{
-			console.log("Ajout du cocktail à l'index " + indexCocktail[1]);
+
 			$(this).attr("title","Retirer des favoris").tooltip("fixTitle");
 			
 			$.ajax({
@@ -516,18 +526,11 @@ $(document).ready(function() {
 		
 	});
 	
-	/* $("#cocktailsPreferes").click(function() {
-		$(".allCocktails").css("display","none");
-		$(".cocktailsPreferes").css("display", "block");
-	}); */
+	/* FIN PARTIE LOGIN */
 	
-	/* $("#allCocktails").click(function() {
-		$(".cocktailsPreferes").css("display","none");
-		$(".allCocktails").css("display", "block");
-		location.reload();
-	}); */
-	
-/* PARTIE USERDATA */
+	/* PARTIE USERDATA */
+
+	//Permet de passer de la partie "affichage" des données à la partie "modification"
 	$("#display-data-input").click(function() {
 		
 		$(".data-input").each(function() {
@@ -541,6 +544,7 @@ $(document).ready(function() {
 		$("html, body").stop().animate({scrollTop:0}, 500);
 	});
 	
+	//Permet de passer de la partie "modification" des données à la partie "affichage" (sans enregistrer)
 	$("#cancel-data").click(function() {
 		
 		$(".data-input").each(function() {
@@ -554,6 +558,7 @@ $(document).ready(function() {
 		$("html, body").stop().animate({scrollTop:0}, 500);
 	});
 	
+	//Vérifie que le nouveau mot de passe est OK, en vérifiant d'abord la saisie de l'ancien
 	function isNewPasswordOk(oldUsername, newCurrentPassword, newNewPassword, newConfirmPassword) {
 		var check = false;
 		var checkOldPassword = false;
@@ -591,6 +596,7 @@ $(document).ready(function() {
 			}
 	}
 	
+	//Vérifie si seulement le nouveau nom d'utilisateur est deja connu (si celui-ci est différent de l'ancien)
 	function isUsernameAlreadyUsed(oldUsername, newUsername) {
 		var isUsernameAlreadyUsed = false;
 		
@@ -622,6 +628,7 @@ $(document).ready(function() {
 			
 	}
 	
+	//Met à jour les données modifiées par l'utilisateur
 	function updateUserData(oldUsername, newUsername, newForename, newName, newGender, newEmail, newNewPassword, newDateNaissance, newAdresse, newCp, newVille, newTelephone) {
 			$.ajax({
 				type:"GET",
@@ -633,6 +640,7 @@ $(document).ready(function() {
 			});
 	}
 	
+	//Bouton de sauvegarde des modification : lance toutes les vérification nécessaires
 	$("#save-data").click(function() {
 		var oldUsername = $("#data-old-username").val();
 		var newUsername = $("#data-username").val();
@@ -649,22 +657,6 @@ $(document).ready(function() {
 		var newVille = $("#data-ville").val();
 		var newTelephone = $("#data-telephone").val();
 		
-		console.clear();
-	/* 	console.log(isUsernameOK(newUsername));
-		console.log(isForenameOk(newForename));
-		console.log(isNameOk(newName));
-		console.log(isGenderSet(newGender));
-		console.log(isEmailOk(newEmail));
-		console.log(oldUsername);
-		
-		console.log(isNewPasswordOk(oldUsername, newCurrentPassword,newNewPassword, newConfirmPassword));
-		
-		console.log(isDateNaissanceOk(newDateNaissance));
-		console.log(isAdresseOk(newAdresse));
-		console.log(isCPOk(newCp));
-		console.log(isVilleOk(newVille));
-		console.log(isTelephoneOk(newTelephone)); */
-		console.log(newUsername);
 		 if(isUsernameOK(newUsername) && isUsernameAlreadyUsed(oldUsername, newUsername) && isForenameOk(newForename) && isNameOk(newName) && isGenderSet(newGender) && isEmailOk(newEmail) && isNewPasswordOk(oldUsername, newCurrentPassword,newNewPassword, newConfirmPassword) && isDateNaissanceOk(newDateNaissance) && isAdresseOk(newAdresse) && isCPOk(newCp) && isVilleOk(newVille) && isTelephoneOk(newTelephone)) {
 			
 			updateUserData(oldUsername, newUsername, newForename, newName, newGender, newEmail, newNewPassword, newDateNaissance, newAdresse, newCp, newVille, newTelephone); //Sauvegarde dans 'user.json'
@@ -693,9 +685,10 @@ $(document).ready(function() {
 				confirmButtonText: "Compris !"
 			})
 		}
-		
-
 	});
+	
+	
+	/* FIN  PARTIE USERDATA */
 });
 
 		

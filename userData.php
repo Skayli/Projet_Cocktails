@@ -1,5 +1,5 @@
 <?php
-
+	//Récupération des informations de l'utilsateur enregistrée dans les cookies
 	$user = $_COOKIE["user"];
 	
 	$username = $user["username"];
@@ -15,7 +15,7 @@
 	$telephone = $user["telephone"];
 
 ?>
-
+	
 	<h1>Vos données personnelles</h1>
 	
 	<div class="row">

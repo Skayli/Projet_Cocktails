@@ -1,5 +1,6 @@
 <?php
 
+	//Mise à jour des données de l'utilisateur connecté (via la page userData.php)
 	$oldUsername = $_GET["oldUsername"];
 	
 	$newUsername = $_GET["newUsername"];

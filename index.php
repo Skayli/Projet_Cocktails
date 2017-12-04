@@ -141,8 +141,8 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
 
 	
-<!-- Fichier créés -->	
-    <link href="resources/css/bootstrap.css" rel="stylesheet">
+	<!-- Fichier créés (ou modifiés) -->	
+	<link href="resources/css/bootstrap.css" rel="stylesheet">
 	<link href="resources/css/style.css" rel="stylesheet">
 		
 	<script type="text/javascript" src="resources/js/script.js"></script>
@@ -195,24 +195,6 @@
 							<a href="#" class="text-nav-bar">Inscription/Connexion</a>
 						</li>
 					<?php } ?>
-					
-					<!--<!-- Zone de saisie à droite, contenant une datalist 
-					<div class="col-sm-5 col-md-5 pull-right">
-						<form class="navbar-form" role="search">
-							<div class="input-group">
-								<input list="browsers" class="form-control" placeholder="Rechercher">
-								<datalist id="browsers">
-								  <?/*php foreach($ingredients as $allIngredients => $nom)
-								  {
-									  echo '<option value="'.$nom.'" />';
-								  } */?>
-								</datalist>
-								<div class="input-group-btn"><!-- Bouton avec la loupe pour lancer la recherche 
-									<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-								</div>
-							</div>
-						</form>
-					</div> -->
 				
 				</ul>
 				

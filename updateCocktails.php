@@ -1,5 +1,6 @@
 <?php 
 
+	//Mise à jour des cocktails favoris après un click sur "ajouter" ou "retirer" des favoris
 	$file = file_get_contents('users.json');
 	
 	$data = json_decode($file);

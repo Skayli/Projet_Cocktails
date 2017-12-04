@@ -235,7 +235,7 @@ pre {
 /* PARTIE RECETTES */
 .thumbnail {
 	display:block;
-	overflow:auto;
+	padding:5px;
 }
 
 .img {

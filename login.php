@@ -1,3 +1,4 @@
+	<!--Formulaires de connexion et d'inscription--> 
 	<div class="row">
 		<div class="col-sm-6 col-sm-offset-3">
 			<div class="panel panel-login">
@@ -16,12 +17,10 @@
 					
 				</div>
 				
-				
-				
 				<div class="panel-body">
 					<div class="row">
 						<div class="col-sm-12">
-						
+							<!--Partie connexion-->
 							<form id="login-form" action="#" method="post" role="form" style="display:block;">
 								<div class="form-group">
 									<label for="login-username">Nom d'utilisateur</label>
@@ -42,20 +41,10 @@
 									</div>
 								</div>
 							
-								<!-- Gerer envoie de mail si mot de passe perdu ? (necessite de configurer wamp)
-								<div class="form-group">
-									<div class="row">
-										<div class="col-sm-12">
-											<div class="text-center">
-												<a href="#" tabindex="4" class="forgot-password">Mot de passe oublié ?</a>
-											</div>
-										</div>
-									</div>
-								</div>
-								-->
 							</form>
 							
 							<form id="register-form" action="#" method="post" role="form" style="display:none">
+							<!--Partie inscription-->
 								<div class="form-group">
 									<label for="register-username">Nom d'utilisateur</label>
 									<input type="text" name="register-username" id="register-username" tabindex="1" class="form-control" placeholder="Nom d'utilisateur" value="">

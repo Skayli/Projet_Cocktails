@@ -4,10 +4,10 @@
 		
 		asort($Recettes);
 		
-		$tabIngredients; 
-		$superCategories;
+		$tabIngredients; //Pour contenir tous les ingredients et sous-categories lors d'une recherche
+		$superCategories; //Contient les super-categories de la recherche pour le fil d'ariane
 		
-		
+		//Modification du tableau Recettes lors d'une recherche afin d'avoir une seule fonction de création de la page
 		if(isset($_POST["ingredient"]) && $_POST["ingredient"] != "") {
 			
 			$ingredientRecherche = $_POST["ingredient"];

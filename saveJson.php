@@ -1,4 +1,5 @@
 <?php
+	//Enregistrement de l'utilisateur lors de son inscription
 	$file = file_get_contents('users.json');
 	
 	$data = json_decode($file);
